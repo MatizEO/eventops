@@ -3,36 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Event Ops</title>
+    <title>event_ops</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
-            font-family: Arial, sans-serif;
-            background-color: #16121a;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: #0e0a12;
             color: #ffffff;
             line-height: 1.6;
         }
-        .hero-banner {
-            width: 100%;
-            background-color: #120d17;
-            text-align: center;
-            padding: 36px 20px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-        }
-        .hero-banner img {
-            max-width: 100%;
-            max-height: 260px;
-            height: auto;
-            display: inline-block;
-        }
         nav {
+            position: sticky;
+            top: 0;
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
             gap: 24px;
-            padding: 18px 20px;
-            background-color: #1c1622;
-            font-size: 0.9rem;
+            padding: 16px 20px;
+            background-color: rgba(14, 10, 18, 0.9);
+            border-bottom: 1px solid rgba(255, 42, 133, 0.18);
+            font-size: 0.85rem;
             letter-spacing: 1.5px;
         }
         nav a {
@@ -41,16 +31,43 @@
             text-transform: uppercase;
         }
         nav a:hover { color: #ff2a85; }
-        .intro {
-            text-align: center;
-            padding: 64px 20px 48px;
-            max-width: 820px;
+        .hero {
+            max-width: 900px;
             margin: 0 auto;
+            padding: 48px 20px 56px;
+            text-align: center;
         }
-        .intro h1 {
-            font-size: 2rem;
+        .logo-frame {
+            display: inline-block;
+            padding: 12px 18px;
+            border-radius: 12px;
+            background: radial-gradient(circle at center, rgba(255, 42, 133, 0.14), rgba(14, 10, 18, 0.2) 75%);
+            border: 1px solid rgba(255, 42, 133, 0.25);
+            margin-bottom: 28px;
+        }
+        .logo-frame img {
+            display: block;
+            max-width: 100%;
+            width: 420px;
+            height: auto;
+            border-radius: 8px;
+            -webkit-mask-image: linear-gradient(to bottom, #000 82%, transparent 100%);
+            mask-image: linear-gradient(to bottom, #000 82%, transparent 100%);
+        }
+        .tag {
+            display: inline-block;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #ff2a85;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+        .hero h1 {
+            font-size: 1.9rem;
             font-weight: 700;
-            margin-bottom: 24px;
+            max-width: 720px;
+            margin: 0 auto 24px;
         }
         .btn {
             display: inline-block;
@@ -58,7 +75,7 @@
             background-color: #e6277a;
             color: #ffffff;
             text-decoration: none;
-            border-radius: 4px;
+            border-radius: 6px;
             font-weight: 600;
             font-size: 0.95rem;
         }
@@ -71,7 +88,7 @@
         }
         .offer h2 {
             font-size: 1.4rem;
-            margin-bottom: 32px;
+            margin-bottom: 28px;
         }
         .cards {
             display: grid;
@@ -79,14 +96,16 @@
             gap: 20px;
         }
         .card {
-            background-color: #231b2b;
+            background-color: #17111e;
             border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 6px;
-            padding: 28px 22px;
+            border-radius: 8px;
+            padding: 26px 22px;
+            text-align: left;
         }
         .card h3 {
             font-size: 1.05rem;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
+            color: #ffffff;
         }
         .card p {
             color: #c8c1d1;
@@ -94,7 +113,7 @@
         }
         footer {
             text-align: center;
-            padding: 36px 20px;
+            padding: 32px 20px;
             border-top: 1px solid rgba(255, 255, 255, 0.08);
             color: #9e96a8;
             font-size: 0.85rem;
@@ -103,36 +122,35 @@
 </head>
 <body>
 
-    <div class="hero-banner">
-        <img src="logo.png" alt="event_ops – Lubimy nosić">
-    </div>
-
     <nav>
         <a href="#o-nas">O nas</a>
         <a href="#oferta">Oferta</a>
-        <a href="#realizacje">Realizacje</a>
         <a href="#kontakt">Kontakt</a>
     </nav>
 
-    <section class="intro" id="o-nas">
+    <section class="hero" id="o-nas">
+        <div class="logo-frame">
+            <img src="logo.png" alt="event_ops – Lubimy nosić">
+        </div>
+        <div class="tag">Produkcja &amp; zaplecze wydarzeń</div>
         <h1>Niezapomniane wydarzenia, imprezy i integracje na najwyższym poziomie.</h1>
-        <a href="mailto:kontakt@eventops.pl" class="btn">Napisz do nas / Zapytaj o wycenę</a>
+        <a href="mailto:kontakt@eventops.pl" class="btn">Zapytaj o wycenę</a>
     </section>
 
     <section class="offer" id="oferta">
-        <h2>Nasza Oferta</h2>
+        <h2>Nasza oferta</h2>
         <div class="cards">
-            <div class="card" id="realizacje">
+            <div class="card">
                 <h3>Imprezy firmowe</h3>
-                <p>Kompleksowa organizacja wydarzeń dla zespołów i firm.</p>
+                <p>Sprawna organizacja i obsługa wydarzeń integracyjnych oraz firmowych.</p>
             </div>
             <div class="card">
-                <h3>Integracje plenerowe</h3>
-                <p>Aktywne scenariusze i wydarzenia na świeżym powietrzu.</p>
+                <h3>Wydarzenia plenerowe</h3>
+                <p>Przygotowanie i wsparcie operacyjne eventów na otwartej przestrzeni.</p>
             </div>
             <div class="card">
-                <h3>Konferencje &amp; Gale</h3>
-                <p>Sprawna oprawa i logistyka oficjalnych spotkań.</p>
+                <h3>Konferencje i gale</h3>
+                <p>Rzetelna logistyka, koordynacja i zaplecze na oficjalne spotkania.</p>
             </div>
         </div>
     </section>
