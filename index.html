@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>event_ops — Stagehand, Technicy, Riggerzy | Kraków</title>
+    <link rel="icon" type="image/png" href="favicon.png">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
         html { scroll-behavior: smooth; }
@@ -36,13 +37,20 @@
             padding: 20px 24px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         }
-        .brand-logo {
-            height: 42px;
-            width: auto;
-            display: block;
-            transition: transform 0.25s ease, opacity 0.25s ease;
+        .brand-text {
+            font-size: 1.25rem;
+            font-weight: 800;
+            letter-spacing: 0.8px;
+            color: #ffffff;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            transition: color 0.25s ease, transform 0.25s ease;
         }
-        .brand-logo:hover { transform: scale(1.04); }
+        .brand-text:hover {
+            color: #ff2a85;
+            transform: translateY(-1px);
+        }
 
         nav {
             display: flex;
@@ -274,7 +282,6 @@
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 8px;
             padding: 22px 20px;
-            position: relative;
             transition: transform 0.25s ease, border-color 0.25s ease;
         }
         .step-card:hover {
@@ -369,4 +376,215 @@
             padding: 6px 14px;
             cursor: pointer;
             font-size: 0.85rem;
-            transition: background-color 0.2s ease, transform
+            transition: background-color 0.2s ease, transform 0.15s ease;
+        }
+        .game-reset:hover { background: #e6277a; transform: translateY(-1px); }
+        .game-board {
+            display: inline-grid;
+            gap: 4px;
+            background: #0e0a12;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .cell {
+            width: 38px;
+            height: 38px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.65rem;
+            user-select: none;
+        }
+        .cell-floor { background: #1a1422; }
+        .cell-wall {
+            background: #2c2238;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            color: #6e647c;
+        }
+        .cell-goal {
+            background: rgba(255, 42, 133, 0.14);
+            border: 1px dashed #ff2a85;
+            color: #ff2a85;
+            font-size: 0.6rem;
+        }
+        .cell-case {
+            background: #2b1829;
+            border: 2px solid #ff2a85;
+            color: #ffffff;
+            box-shadow: 0 0 10px rgba(255, 42, 133, 0.25);
+        }
+        .cell-case-done {
+            background: #163326;
+            border: 2px solid #38d996;
+            color: #9bf6cc;
+        }
+        .cell-player {
+            background: #ff2a85;
+            color: #0e0a12;
+            box-shadow: 0 0 12px rgba(255, 42, 133, 0.5);
+        }
+        .game-controls {
+            margin-top: 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+        .dpad-row { display: flex; gap: 8px; }
+        .dpad-btn {
+            width: 44px;
+            height: 40px;
+            background: #231b2b;
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            border-radius: 6px;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+        .dpad-btn:active { background: #ff2a85; color: #0e0a12; }
+        .game-status {
+            margin-top: 14px;
+            min-height: 24px;
+            font-weight: 600;
+            color: #38d996;
+            font-size: 0.95rem;
+        }
+        .game-next {
+            display: none;
+            margin-top: 10px;
+            background: #e6277a;
+            color: #ffffff;
+            border: none;
+            border-radius: 6px;
+            padding: 9px 18px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: background-color 0.2s ease, transform 0.15s ease;
+        }
+        .game-next:hover { background: #ff2a85; transform: translateY(-1px); }
+        .game-next.visible { display: inline-block; }
+
+        .contact-box {
+            max-width: 1060px;
+            margin: 0 auto 64px;
+            padding: 0 24px;
+        }
+        .contact-inner {
+            background-color: #16111c;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 8px;
+            padding: 32px 24px;
+            text-align: center;
+            transition: border-color 0.25s ease;
+        }
+        .contact-inner:hover { border-color: rgba(255, 42, 133, 0.35); }
+        .contact-inner h2 { font-size: 1.45rem; margin-bottom: 10px; }
+        .contact-inner p { color: #cfc8d8; margin-bottom: 20px; }
+        .phone-link {
+            display: inline-block;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #ff2a85;
+            text-decoration: none;
+            letter-spacing: 0.5px;
+            transition: transform 0.2s ease, text-shadow 0.2s ease;
+        }
+        .phone-link:hover {
+            transform: scale(1.05);
+            text-shadow: 0 0 16px rgba(255, 42, 133, 0.45);
+        }
+
+        footer {
+            text-align: center;
+            padding: 32px 24px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            color: #968ea2;
+            font-size: 0.85rem;
+        }
+
+        @media (max-width: 480px) {
+            .cell {
+                width: 31px;
+                height: 31px;
+                font-size: 0.55rem;
+            }
+            .cell-goal { font-size: 0.5rem; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation: none !important;
+                transition: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="#" class="brand-text">event_ops</a>
+        <nav>
+            <a href="#ekipy">Ekipy</a>
+            <a href="#wspolpraca">Współpraca</a>
+            <a href="#minigra">Minigra</a>
+            <a href="#kontakt">Kontakt</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <img src="logot.png" alt="event_ops" class="hero-logo">
+        <div class="role-bar">
+            <span class="status-dot"></span>
+            Kraków • Stagehand • Technicy • Riggerzy
+        </div>
+        <h1>Ekipy na scenę, halę i zaplecze eventowe w Krakowie.</h1>
+        <p>Zapewniamy ludzi do realizacji produkcyjnych, załadunków, budowy scenografii i prac technicznych – tam, gdzie liczy się czas, BHP i sprawna koordynacja.</p>
+
+        <div class="carry-scene" aria-label="Animacja pracownika wchodzącego po schodkach ze skrzynią transportową">
+            <svg class="carry-svg" viewBox="0 0 360 136" role="img" aria-label="Ludzik niosący case po schodkach">
+                <path d="M 20 116 L 115 116 L 115 98 L 165 98 L 165 80 L 215 80 L 215 62 L 330 62"
+                      fill="none" stroke="#8a7f99" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+                <line x1="115" y1="98" x2="115" y2="116" stroke="#ff2a85" stroke-width="2" opacity="0.65" />
+                <line x1="165" y1="80" x2="165" y2="98" stroke="#ff2a85" stroke-width="2" opacity="0.65" />
+                <line x1="215" y1="62" x2="215" y2="80" stroke="#ff2a85" stroke-width="2" opacity="0.65" />
+
+                <g class="carrier-group">
+                    <line class="leg-left" x1="72" y1="89" x2="65" y2="115" stroke="#e6e1ec" stroke-width="4.2" stroke-linecap="round" />
+                    <line class="leg-right" x1="78" y1="89" x2="85" y2="115" stroke="#b9b0c6" stroke-width="4.2" stroke-linecap="round" />
+
+                    <line x1="75" y1="64" x2="75" y2="90" stroke="#ffffff" stroke-width="4.8" stroke-linecap="round" />
+                    <circle cx="75" cy="53" r="7.5" fill="#ffffff" />
+                    <path d="M66 51 Q75 42 85 51 Z" fill="#ff2a85" />
+
+                    <rect x="86" y="63" width="36" height="24" rx="3" fill="#231b2b" stroke="#ff2a85" stroke-width="2.3" />
+                    <line x1="86" y1="75" x2="122" y2="75" stroke="#ff2a85" stroke-width="1.4" opacity="0.7" />
+                    <rect x="100" y="71.5" width="7" height="7" rx="1" fill="#ff2a85" />
+
+                    <polyline points="75,69 87,73 92,73" fill="none" stroke="#ffffff" stroke-width="3.8" stroke-linecap="round" stroke-linejoin="round" />
+                </g>
+            </svg>
+        </div>
+
+        <div class="cta-group">
+            <a href="tel:+48500536800" class="btn">Zadzwoń: 500 536 800</a>
+            <a href="sms:+48500536800" class="btn-secondary">Wyślij SMS</a>
+        </div>
+    </section>
+
+    <section class="offer" id="ekipy">
+        <h2>Kogo zapewniamy</h2>
+        <div class="cards">
+            <div class="card">
+                <h3>Stagehand</h3>
+                <p>Załadunek i rozładunek sprzętu, praca przy scenie, pomoc przy montażu i demontażu konstrukcji oraz zaplecza na terenie Krakowa.</p>
+            </div>
+            <div class="card">
+                <h3>Technicy</h3>
+                <p>Wsparcie techniczne podczas przygotowań i trwania wydarzenia – sprawne działanie na planie, hali i scenie.</p>
+            </div>
+            <div class="card">
+                <h3>Riggerzy</h3>
