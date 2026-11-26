@@ -5,91 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>event_ops — Stagehand, Technicy, Riggerzy | Kraków</title>
     <style>
-        <style>
-  .carry-scene {
-    max-width: 420px;
-    margin: 0 auto 28px;
-    padding: 12px 16px;
-    background: rgba(22, 17, 28, 0.85);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 10px;
-    overflow: hidden;
-  }
-  .carry-svg {
-    width: 100%;
-    height: 110px;
-    display: block;
-  }
-  .carrier-group {
-    animation: walkBob 0.55s ease-in-out infinite;
-    transform-origin: center bottom;
-  }
-  .leg-left {
-    transform-origin: 150px 68px;
-    animation: legSwingLeft 0.55s ease-in-out infinite;
-  }
-  .leg-right {
-    transform-origin: 158px 68px;
-    animation: legSwingRight 0.55s ease-in-out infinite;
-  }
-  .ground-line {
-    stroke-dasharray: 18 10;
-    animation: groundScroll 0.8s linear infinite;
-  }
-
-  @keyframes walkBob {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-4px); }
-  }
-  @keyframes legSwingLeft {
-    0%, 100% { transform: rotate(22deg); }
-    50% { transform: rotate(-22deg); }
-  }
-  @keyframes legSwingRight {
-    0%, 100% { transform: rotate(-22deg); }
-    50% { transform: rotate(22deg); }
-  }
-  @keyframes groundScroll {
-    from { stroke-dashoffset: 0; }
-    to { stroke-dashoffset: -28; }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .carrier-group, .leg-left, .leg-right, .ground-line {
-      animation: none !important;
-    }
-  }
-</style>
-
-<!-- Wklej w <body> tam, gdzie chcesz widzieć animację (np. nad przyciskami w .hero) -->
-<div class="carry-scene" aria-label="Animacja pracownika przenoszącego skrzynię transportową">
-  <svg class="carry-svg" viewBox="0 0 360 110" role="img" aria-label="Ludzik niosący case">
-    <!-- Podłoże -->
-    <line class="ground-line" x1="10" y1="96" x2="350" y2="96" stroke="#6d647a" stroke-width="2.5" stroke-linecap="round" />
-
-    <!-- Postać + case -->
-    <g class="carrier-group">
-      <!-- Nogi -->
-      <line class="leg-left" x1="150" y1="68" x2="140" y2="94" stroke="#e6e1ec" stroke-width="4.5" stroke-linecap="round" />
-      <line class="leg-right" x1="158" y1="68" x2="170" y2="94" stroke="#b9b0c6" stroke-width="4.5" stroke-linecap="round" />
-
-      <!-- Tułów i kask -->
-      <line x1="154" y1="42" x2="154" y2="69" stroke="#ffffff" stroke-width="5" stroke-linecap="round" />
-      <circle cx="154" cy="30" r="8" fill="#ffffff" />
-      <!-- Kask roboczy -->
-      <path d="M144 28 Q154 18 165 28 Z" fill="#ff2a85" />
-
-      <!-- Case (skrzynia transportowa) trzymany z przodu -->
-      <rect x="166" y="42" width="42" height="28" rx="3" fill="#231b2b" stroke="#ff2a85" stroke-width="2.5" />
-      <!-- Narożniki i pasek case'a -->
-      <line x1="166" y1="56" x2="208" y2="56" stroke="#ff2a85" stroke-width="1.5" opacity="0.7" />
-      <rect x="183" y="52" width="8" height="8" rx="1" fill="#ff2a85" />
-
-      <!-- Ręce trzymające case -->
-      <polyline points="154,48 168,53 174,53" fill="none" stroke="#ffffff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-    </g>
-  </svg>
-</div>
         * { box-sizing: border-box; margin: 0; padding: 0; }
         html { scroll-behavior: smooth; }
         body {
@@ -100,7 +15,6 @@
             overflow-x: hidden;
         }
 
-        /* Animacje kluczowe */
         @keyframes fadeUp {
             from {
                 opacity: 0;
@@ -144,7 +58,6 @@
             transform: scale(1.04);
         }
 
-        /* Animowane podkreślenie w nawigacji */
         nav {
             display: flex;
             gap: 24px;
@@ -226,10 +139,58 @@
             color: #cfc8d8;
             font-size: 1.08rem;
             max-width: 640px;
-            margin: 0 auto 32px;
+            margin: 0 auto 28px;
         }
 
-        /* Animowane przyciski */
+        /* Animacja ludzika z case'em */
+        .carry-scene {
+            max-width: 420px;
+            margin: 0 auto 28px;
+            padding: 12px 16px;
+            background: rgba(22, 17, 28, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .carry-svg {
+            width: 100%;
+            height: 110px;
+            display: block;
+        }
+        .carrier-group {
+            animation: walkBob 0.55s ease-in-out infinite;
+            transform-origin: center bottom;
+        }
+        .leg-left {
+            transform-origin: 150px 68px;
+            animation: legSwingLeft 0.55s ease-in-out infinite;
+        }
+        .leg-right {
+            transform-origin: 158px 68px;
+            animation: legSwingRight 0.55s ease-in-out infinite;
+        }
+        .ground-line {
+            stroke-dasharray: 18 10;
+            animation: groundScroll 0.8s linear infinite;
+        }
+
+        @keyframes walkBob {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-4px); }
+        }
+        @keyframes legSwingLeft {
+            0%, 100% { transform: rotate(22deg); }
+            50% { transform: rotate(-22deg); }
+        }
+        @keyframes legSwingRight {
+            0%, 100% { transform: rotate(-22deg); }
+            50% { transform: rotate(22deg); }
+        }
+        @keyframes groundScroll {
+            from { stroke-dashoffset: 0; }
+            to { stroke-dashoffset: -28; }
+        }
+
         .cta-group {
             display: flex;
             justify-content: center;
@@ -295,7 +256,6 @@
             gap: 20px;
         }
 
-        /* Animowane karty */
         .card {
             background-color: #16111c;
             border: 1px solid rgba(255, 255, 255, 0.08);
@@ -399,7 +359,6 @@
             font-size: 0.85rem;
         }
 
-        /* Szanowanie ustawień systemowych użytkownika (ograniczenie ruchu) */
         @media (prefers-reduced-motion: reduce) {
             *, *::before, *::after {
                 animation: none !important;
@@ -427,6 +386,28 @@
         </div>
         <h1>Ekipy na scenę, halę i zaplecze eventowe w Krakowie.</h1>
         <p>Zapewniamy ludzi do realizacji produkcyjnych, załadunków, budowy scenografii i prac technicznych – tam, gdzie liczy się czas, BHP i sprawna koordynacja.</p>
+
+        <div class="carry-scene" aria-label="Animacja pracownika przenoszącego skrzynię transportową">
+            <svg class="carry-svg" viewBox="0 0 360 110" role="img" aria-label="Ludzik niosący case">
+                <line class="ground-line" x1="10" y1="96" x2="350" y2="96" stroke="#6d647a" stroke-width="2.5" stroke-linecap="round" />
+
+                <g class="carrier-group">
+                    <line class="leg-left" x1="150" y1="68" x2="140" y2="94" stroke="#e6e1ec" stroke-width="4.5" stroke-linecap="round" />
+                    <line class="leg-right" x1="158" y1="68" x2="170" y2="94" stroke="#b9b0c6" stroke-width="4.5" stroke-linecap="round" />
+
+                    <line x1="154" y1="42" x2="154" y2="69" stroke="#ffffff" stroke-width="5" stroke-linecap="round" />
+                    <circle cx="154" cy="30" r="8" fill="#ffffff" />
+                    <path d="M144 28 Q154 18 165 28 Z" fill="#ff2a85" />
+
+                    <rect x="166" y="42" width="42" height="28" rx="3" fill="#231b2b" stroke="#ff2a85" stroke-width="2.5" />
+                    <line x1="166" y1="56" x2="208" y2="56" stroke="#ff2a85" stroke-width="1.5" opacity="0.7" />
+                    <rect x="183" y="52" width="8" height="8" rx="1" fill="#ff2a85" />
+
+                    <polyline points="154,48 168,53 174,53" fill="none" stroke="#ffffff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+                </g>
+            </svg>
+        </div>
+
         <div class="cta-group">
             <a href="tel:+48500536800" class="btn">Zadzwoń: 500 536 800</a>
             <a href="sms:+48500536800" class="btn-secondary">Wyślij SMS</a>
