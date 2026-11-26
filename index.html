@@ -142,9 +142,9 @@
             margin: 0 auto 28px;
         }
 
-        /* Animacja ludzika z case'em */
+        /* Animacja ludzika wchodzącego po schodkach z case'em */
         .carry-scene {
-            max-width: 420px;
+            max-width: 440px;
             margin: 0 auto 28px;
             padding: 12px 16px;
             background: rgba(22, 17, 28, 0.85);
@@ -154,41 +154,65 @@
         }
         .carry-svg {
             width: 100%;
-            height: 110px;
+            height: 132px;
             display: block;
         }
         .carrier-group {
-            animation: walkBob 0.55s ease-in-out infinite;
-            transform-origin: center bottom;
+            animation: stairClimb 2.4s ease-in-out infinite;
         }
         .leg-left {
-            transform-origin: 150px 68px;
-            animation: legSwingLeft 0.55s ease-in-out infinite;
+            transform-box: fill-box;
+            transform-origin: center top;
+            animation: stepLeft 0.6s ease-in-out infinite;
         }
         .leg-right {
-            transform-origin: 158px 68px;
-            animation: legSwingRight 0.55s ease-in-out infinite;
-        }
-        .ground-line {
-            stroke-dasharray: 18 10;
-            animation: groundScroll 0.8s linear infinite;
+            transform-box: fill-box;
+            transform-origin: center top;
+            animation: stepRight 0.6s ease-in-out infinite;
         }
 
-        @keyframes walkBob {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-4px); }
+        /* Ruch w górę i w prawo po 3 stopniach */
+        @keyframes stairClimb {
+            0% {
+                opacity: 0;
+                transform: translate(0px, 28px);
+            }
+            12% {
+                opacity: 1;
+                transform: translate(12px, 24px);
+            }
+            25% {
+                transform: translate(32px, 14px);
+            }
+            38% {
+                transform: translate(52px, 16px);
+            }
+            50% {
+                transform: translate(74px, 4px);
+            }
+            63% {
+                transform: translate(94px, 6px);
+            }
+            75% {
+                transform: translate(116px, -6px);
+            }
+            88% {
+                opacity: 1;
+                transform: translate(132px, -8px);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(144px, -12px);
+            }
         }
-        @keyframes legSwingLeft {
-            0%, 100% { transform: rotate(22deg); }
-            50% { transform: rotate(-22deg); }
+
+        @keyframes stepLeft {
+            0%, 100% { transform: rotate(24deg); }
+            50% { transform: rotate(-20deg); }
         }
-        @keyframes legSwingRight {
-            0%, 100% { transform: rotate(-22deg); }
-            50% { transform: rotate(22deg); }
-        }
-        @keyframes groundScroll {
-            from { stroke-dashoffset: 0; }
-            to { stroke-dashoffset: -28; }
+        @keyframes stepRight {
+            0%, 100% { transform: rotate(-20deg); }
+            50% { transform: rotate(24deg); }
         }
 
         .cta-group {
@@ -387,23 +411,31 @@
         <h1>Ekipy na scenę, halę i zaplecze eventowe w Krakowie.</h1>
         <p>Zapewniamy ludzi do realizacji produkcyjnych, załadunków, budowy scenografii i prac technicznych – tam, gdzie liczy się czas, BHP i sprawna koordynacja.</p>
 
-        <div class="carry-scene" aria-label="Animacja pracownika przenoszącego skrzynię transportową">
-            <svg class="carry-svg" viewBox="0 0 360 110" role="img" aria-label="Ludzik niosący case">
-                <line class="ground-line" x1="10" y1="96" x2="350" y2="96" stroke="#6d647a" stroke-width="2.5" stroke-linecap="round" />
+        <div class="carry-scene" aria-label="Animacja pracownika wchodzącego po schodkach ze skrzynią transportową">
+            <svg class="carry-svg" viewBox="0 0 380 132" role="img" aria-label="Ludzik niosący case po schodkach">
+                <!-- Schodki -->
+                <path d="M 30 116 L 110 116 L 110 98 L 160 98 L 160 80 L 210 80 L 210 62 L 290 62"
+                      fill="none" stroke="#8a7f99" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+                <line x1="110" y1="98" x2="110" y2="116" stroke="#ff2a85" stroke-width="2" opacity="0.65" />
+                <line x1="160" y1="80" x2="160" y2="98" stroke="#ff2a85" stroke-width="2" opacity="0.65" />
+                <line x1="210" y1="62" x2="210" y2="80" stroke="#ff2a85" stroke-width="2" opacity="0.65" />
 
+                <!-- Postać wchodząca po schodkach z case'em -->
                 <g class="carrier-group">
-                    <line class="leg-left" x1="150" y1="68" x2="140" y2="94" stroke="#e6e1ec" stroke-width="4.5" stroke-linecap="round" />
-                    <line class="leg-right" x1="158" y1="68" x2="170" y2="94" stroke="#b9b0c6" stroke-width="4.5" stroke-linecap="round" />
+                    <line class="leg-left" x1="88" y1="86" x2="80" y2="113" stroke="#e6e1ec" stroke-width="4.5" stroke-linecap="round" />
+                    <line class="leg-right" x1="96" y1="86" x2="106" y2="113" stroke="#b9b0c6" stroke-width="4.5" stroke-linecap="round" />
 
-                    <line x1="154" y1="42" x2="154" y2="69" stroke="#ffffff" stroke-width="5" stroke-linecap="round" />
-                    <circle cx="154" cy="30" r="8" fill="#ffffff" />
-                    <path d="M144 28 Q154 18 165 28 Z" fill="#ff2a85" />
+                    <line x1="92" y1="60" x2="92" y2="87" stroke="#ffffff" stroke-width="5" stroke-linecap="round" />
+                    <circle cx="92" cy="48" r="8" fill="#ffffff" />
+                    <path d="M82 46 Q92 36 103 46 Z" fill="#ff2a85" />
 
-                    <rect x="166" y="42" width="42" height="28" rx="3" fill="#231b2b" stroke="#ff2a85" stroke-width="2.5" />
-                    <line x1="166" y1="56" x2="208" y2="56" stroke="#ff2a85" stroke-width="1.5" opacity="0.7" />
-                    <rect x="183" y="52" width="8" height="8" rx="1" fill="#ff2a85" />
+                    <!-- Case -->
+                    <rect x="104" y="58" width="40" height="27" rx="3" fill="#231b2b" stroke="#ff2a85" stroke-width="2.5" />
+                    <line x1="104" y1="71.5" x2="144" y2="71.5" stroke="#ff2a85" stroke-width="1.5" opacity="0.7" />
+                    <rect x="120" y="67.5" width="8" height="8" rx="1" fill="#ff2a85" />
 
-                    <polyline points="154,48 168,53 174,53" fill="none" stroke="#ffffff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+                    <!-- Ręce trzymające case -->
+                    <polyline points="92,66 106,70 112,70" fill="none" stroke="#ffffff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
                 </g>
             </svg>
         </div>
