@@ -16,25 +16,13 @@
         }
 
         @keyframes fadeUp {
-            from {
-                opacity: 0;
-                transform: translateY(18px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(18px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         @keyframes pulseDot {
-            0%, 100% {
-                transform: scale(1);
-                box-shadow: 0 0 0 0 rgba(255, 42, 133, 0.7);
-            }
-            50% {
-                transform: scale(1.15);
-                box-shadow: 0 0 0 8px rgba(255, 42, 133, 0);
-            }
+            0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 42, 133, 0.7); }
+            50% { transform: scale(1.15); box-shadow: 0 0 0 8px rgba(255, 42, 133, 0); }
         }
 
         header {
@@ -54,9 +42,7 @@
             display: block;
             transition: transform 0.25s ease, opacity 0.25s ease;
         }
-        .brand-logo:hover {
-            transform: scale(1.04);
-        }
+        .brand-logo:hover { transform: scale(1.04); }
 
         nav {
             display: flex;
@@ -83,12 +69,8 @@
             background-color: #ff2a85;
             transition: width 0.25s ease;
         }
-        nav a:hover {
-            color: #ffffff;
-        }
-        nav a:hover::after {
-            width: 100%;
-        }
+        nav a:hover { color: #ffffff; }
+        nav a:hover::after { width: 100%; }
 
         .hero {
             max-width: 880px;
@@ -142,7 +124,6 @@
             margin: 0 auto 28px;
         }
 
-        /* Poprawiona animacja ludzika wchodzącego po 3 stopniach */
         .carry-scene {
             max-width: 440px;
             margin: 0 auto 28px;
@@ -157,9 +138,7 @@
             height: 136px;
             display: block;
         }
-        .carrier-group {
-            animation: stairClimb 3.2s linear infinite;
-        }
+        .carrier-group { animation: stairClimb 3.2s linear infinite; }
         .leg-left {
             transform-box: fill-box;
             transform-origin: center top;
@@ -171,52 +150,18 @@
             animation: stepRight 0.4s ease-in-out infinite;
         }
 
-        /* Dokładne dopasowanie do stopni:
-           Podstawa postaci w SVG ma stopy na y=116 i środek na x=75.
-           Schodki:
-           - parter: y=116 (x: 20..115)
-           - 1. stopień: y=98 (x: 115..165) -> przesunięcie y = -18
-           - 2. stopień: y=80 (x: 165..215) -> przesunięcie y = -36
-           - podest górny: y=62 (x: 215..320) -> przesunięcie y = -54
-        */
         @keyframes stairClimb {
-            0% {
-                opacity: 0;
-                transform: translate(0px, 0px);
-            }
-            10% {
-                opacity: 1;
-                transform: translate(15px, 0px);
-            }
-            25% {
-                transform: translate(45px, 0px);
-            }
-            35% {
-                transform: translate(65px, -18px);
-            }
-            50% {
-                transform: translate(95px, -18px);
-            }
-            60% {
-                transform: translate(115px, -36px);
-            }
-            75% {
-                transform: translate(145px, -36px);
-            }
-            85% {
-                opacity: 1;
-                transform: translate(165px, -54px);
-            }
-            95% {
-                opacity: 1;
-                transform: translate(190px, -54px);
-            }
-            100% {
-                opacity: 0;
-                transform: translate(200px, -54px);
-            }
+            0% { opacity: 0; transform: translate(0px, 0px); }
+            10% { opacity: 1; transform: translate(15px, 0px); }
+            25% { transform: translate(45px, 0px); }
+            35% { transform: translate(65px, -18px); }
+            50% { transform: translate(95px, -18px); }
+            60% { transform: translate(115px, -36px); }
+            75% { transform: translate(145px, -36px); }
+            85% { opacity: 1; transform: translate(165px, -54px); }
+            95% { opacity: 1; transform: translate(190px, -54px); }
+            100% { opacity: 0; transform: translate(200px, -54px); }
         }
-
         @keyframes stepLeft {
             0%, 100% { transform: rotate(22deg); }
             50% { transform: rotate(-18deg); }
@@ -248,9 +193,7 @@
             transform: translateY(-2px);
             box-shadow: 0 8px 24px rgba(255, 42, 133, 0.35);
         }
-        .btn:active {
-            transform: translateY(0);
-        }
+        .btn:active { transform: translateY(0); }
 
         .btn-secondary {
             display: inline-block;
@@ -270,9 +213,7 @@
             transform: translateY(-2px);
             box-shadow: 0 8px 20px rgba(255, 42, 133, 0.14);
         }
-        .btn-secondary:active {
-            transform: translateY(0);
-        }
+        .btn-secondary:active { transform: translateY(0); }
 
         .offer {
             max-width: 1060px;
@@ -290,7 +231,6 @@
             grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
             gap: 20px;
         }
-
         .card {
             background-color: #16111c;
             border: 1px solid rgba(255, 255, 255, 0.08);
@@ -310,13 +250,8 @@
             color: #ffffff;
             transition: color 0.25s ease;
         }
-        .card:hover h3 {
-            color: #ff2a85;
-        }
-        .card p {
-            color: #c2bacd;
-            font-size: 0.92rem;
-        }
+        .card:hover h3 { color: #ff2a85; }
+        .card p { color: #c2bacd; font-size: 0.92rem; }
 
         .standards {
             max-width: 1060px;
@@ -334,21 +269,15 @@
             gap: 20px;
             transition: border-color 0.25s ease;
         }
-        .standards-box:hover {
-            border-color: rgba(255, 42, 133, 0.5);
-        }
+        .standards-box:hover { border-color: rgba(255, 42, 133, 0.5); }
         .standards-item strong {
             display: block;
             color: #ff2a85;
             font-size: 0.95rem;
             margin-bottom: 4px;
         }
-        .standards-item span {
-            color: #cfc8d8;
-            font-size: 0.9rem;
-        }
+        .standards-item span { color: #cfc8d8; font-size: 0.9rem; }
 
-        /* Minigierka */
         .game-section {
             max-width: 1060px;
             margin: 0 auto 72px;
@@ -361,15 +290,8 @@
             padding: 28px 20px;
             text-align: center;
         }
-        .game-box h2 {
-            font-size: 1.4rem;
-            margin-bottom: 8px;
-        }
-        .game-sub {
-            color: #c2bacd;
-            font-size: 0.92rem;
-            margin-bottom: 18px;
-        }
+        .game-box h2 { font-size: 1.4rem; margin-bottom: 8px; }
+        .game-sub { color: #c2bacd; font-size: 0.92rem; margin-bottom: 18px; }
         .game-hud {
             display: flex;
             justify-content: center;
@@ -380,9 +302,7 @@
             font-size: 0.9rem;
             color: #e6e1ec;
         }
-        .game-hud strong {
-            color: #ff2a85;
-        }
+        .game-hud strong { color: #ff2a85; }
         .game-reset {
             background: #231b2b;
             color: #ffffff;
@@ -393,10 +313,7 @@
             font-size: 0.85rem;
             transition: background-color 0.2s ease, transform 0.15s ease;
         }
-        .game-reset:hover {
-            background: #e6277a;
-            transform: translateY(-1px);
-        }
+        .game-reset:hover { background: #e6277a; transform: translateY(-1px); }
         .game-board {
             display: inline-grid;
             grid-template-columns: repeat(7, 42px);
@@ -417,9 +334,7 @@
             font-size: 0.72rem;
             user-select: none;
         }
-        .cell-floor {
-            background: #1a1422;
-        }
+        .cell-floor { background: #1a1422; }
         .cell-wall {
             background: #2c2238;
             border: 1px solid rgba(255, 255, 255, 0.06);
@@ -454,10 +369,7 @@
             align-items: center;
             gap: 8px;
         }
-        .dpad-row {
-            display: flex;
-            gap: 8px;
-        }
+        .dpad-row { display: flex; gap: 8px; }
         .dpad-btn {
             width: 44px;
             height: 40px;
@@ -468,10 +380,7 @@
             font-size: 1rem;
             cursor: pointer;
         }
-        .dpad-btn:active {
-            background: #ff2a85;
-            color: #0e0a12;
-        }
+        .dpad-btn:active { background: #ff2a85; color: #0e0a12; }
         .game-status {
             margin-top: 14px;
             min-height: 24px;
@@ -479,6 +388,21 @@
             color: #38d996;
             font-size: 0.95rem;
         }
+        .game-next {
+            display: none;
+            margin-top: 10px;
+            background: #e6277a;
+            color: #ffffff;
+            border: none;
+            border-radius: 6px;
+            padding: 9px 18px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: background-color 0.2s ease, transform 0.15s ease;
+        }
+        .game-next:hover { background: #ff2a85; transform: translateY(-1px); }
+        .game-next.visible { display: inline-block; }
 
         .contact-box {
             max-width: 1060px;
@@ -493,17 +417,9 @@
             text-align: center;
             transition: border-color 0.25s ease;
         }
-        .contact-inner:hover {
-            border-color: rgba(255, 42, 133, 0.35);
-        }
-        .contact-inner h2 {
-            font-size: 1.45rem;
-            margin-bottom: 10px;
-        }
-        .contact-inner p {
-            color: #cfc8d8;
-            margin-bottom: 20px;
-        }
+        .contact-inner:hover { border-color: rgba(255, 42, 133, 0.35); }
+        .contact-inner h2 { font-size: 1.45rem; margin-bottom: 10px; }
+        .contact-inner p { color: #cfc8d8; margin-bottom: 20px; }
         .phone-link {
             display: inline-block;
             font-size: 1.4rem;
@@ -527,13 +443,8 @@
         }
 
         @media (max-width: 420px) {
-            .game-board {
-                grid-template-columns: repeat(7, 36px);
-            }
-            .cell {
-                width: 36px;
-                height: 36px;
-            }
+            .game-board { grid-template-columns: repeat(7, 36px); }
+            .cell { width: 36px; height: 36px; }
         }
 
         @media (prefers-reduced-motion: reduce) {
@@ -542,26 +453,6 @@
                 transition: none !important;
             }
         }
-        .game-next {
-    display: none;
-    margin-top: 10px;
-    background: #e6277a;
-    color: #ffffff;
-    border: none;
-    border-radius: 6px;
-    padding: 9px 18px;
-    font-weight: 600;
-    font-size: 0.9rem;
-    cursor: pointer;
-    transition: background-color 0.2s ease, transform 0.15s ease;
-  }
-  .game-next:hover {
-    background: #ff2a85;
-    transform: translateY(-1px);
-  }
-  .game-next.visible {
-    display: inline-block;
-  }
     </style>
 </head>
 <body>
@@ -587,14 +478,12 @@
 
         <div class="carry-scene" aria-label="Animacja pracownika wchodzącego po schodkach ze skrzynią transportową">
             <svg class="carry-svg" viewBox="0 0 360 136" role="img" aria-label="Ludzik niosący case po schodkach">
-                <!-- Schodki (3 stopnie + podest na górze, stopy opierają się na liniach poziomych) -->
                 <path d="M 20 116 L 115 116 L 115 98 L 165 98 L 165 80 L 215 80 L 215 62 L 330 62"
                       fill="none" stroke="#8a7f99" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
                 <line x1="115" y1="98" x2="115" y2="116" stroke="#ff2a85" stroke-width="2" opacity="0.65" />
                 <line x1="165" y1="80" x2="165" y2="98" stroke="#ff2a85" stroke-width="2" opacity="0.65" />
                 <line x1="215" y1="62" x2="215" y2="80" stroke="#ff2a85" stroke-width="2" opacity="0.65" />
 
-                <!-- Postać: stopy na y=116, środek na x=75 -->
                 <g class="carrier-group">
                     <line class="leg-left" x1="72" y1="89" x2="65" y2="115" stroke="#e6e1ec" stroke-width="4.2" stroke-linecap="round" />
                     <line class="leg-right" x1="78" y1="89" x2="85" y2="115" stroke="#b9b0c6" stroke-width="4.2" stroke-linecap="round" />
@@ -603,12 +492,10 @@
                     <circle cx="75" cy="53" r="7.5" fill="#ffffff" />
                     <path d="M66 51 Q75 42 85 51 Z" fill="#ff2a85" />
 
-                    <!-- Case -->
                     <rect x="86" y="63" width="36" height="24" rx="3" fill="#231b2b" stroke="#ff2a85" stroke-width="2.3" />
                     <line x1="86" y1="75" x2="122" y2="75" stroke="#ff2a85" stroke-width="1.4" opacity="0.7" />
                     <rect x="100" y="71.5" width="7" height="7" rx="1" fill="#ff2a85" />
 
-                    <!-- Ręce trzymające case -->
                     <polyline points="75,69 87,73 92,73" fill="none" stroke="#ffffff" stroke-width="3.8" stroke-linecap="round" stroke-linejoin="round" />
                 </g>
             </svg>
@@ -656,36 +543,33 @@
     </section>
 
     <section class="game-section" id="minigra">
-    <div class="game-box">
-        <h2>Stagehand Challenge: Wepchnij case na strefę</h2>
-        <p class="game-sub">Użyj strzałek na klawiaturze lub przycisków poniżej, aby dopchać skrzynię (<strong>CASE</strong>) do oznaczonego punktu (<strong>CEL</strong>).</p>
+        <div class="game-box">
+            <h2>Stagehand Challenge: Wepchnij case na strefę</h2>
+            <p class="game-sub">Użyj strzałek na klawiaturze lub przycisków poniżej, aby dopchać skrzynię (<strong>CASE</strong>) do oznaczonego punktu (<strong>CEL</strong>).</p>
 
-        <div class="game-hud">
-            <div>Poziom: <strong id="levelCount">1 / 4</strong></div>
-            <div>Ruchy: <strong id="moveCount">0</strong></div>
-            <button type="button" class="game-reset" id="resetGameBtn">Resetuj poziom</button>
-        </div>
-
-        <div class="game-board" id="gameBoard" role="grid" aria-label="Plansza gry w pchanie case'a"></div>
-
-        <div class="game-controls" aria-label="Sterowanie dotykowe">
-            <div class="dpad-row">
-                <button type="button" class="dpad-btn" data-dir="up" aria-label="W górę">▲</button>
+            <div class="game-hud">
+                <div>Poziom: <strong id="levelCount">1 / 4</strong></div>
+                <div>Ruchy: <strong id="moveCount">0</strong></div>
+                <button type="button" class="game-reset" id="resetGameBtn">Resetuj poziom</button>
             </div>
-            <div class="dpad-row">
-                <button type="button" class="dpad-btn" data-dir="left" aria-label="W lewo">◀</button>
-                <button type="button" class="dpad-btn" data-dir="down" aria-label="W dół">▼</button>
-                <button type="button" class="dpad-btn" data-dir="right" aria-label="W prawo">▶</button>
+
+            <div class="game-board" id="gameBoard" role="grid" aria-label="Plansza gry w pchanie case'a"></div>
+
+            <div class="game-controls" aria-label="Sterowanie dotykowe">
+                <div class="dpad-row">
+                    <button type="button" class="dpad-btn" data-dir="up" aria-label="W górę">▲</button>
+                </div>
+                <div class="dpad-row">
+                    <button type="button" class="dpad-btn" data-dir="left" aria-label="W lewo">◀</button>
+                    <button type="button" class="dpad-btn" data-dir="down" aria-label="W dół">▼</button>
+                    <button type="button" class="dpad-btn" data-dir="right" aria-label="W prawo">▶</button>
+                </div>
             </div>
+
+            <div class="game-status" id="gameStatus"></div>
+            <button type="button" class="game-next" id="nextLevelBtn">Następny poziom →</button>
         </div>
-
-        <div class="game-status" id="gameStatus"></div>
-        <button type="button" class="game-next" id="nextLevelBtn">Następny poziom →</button>
-    </div>
-</section>
-
-
-</script>
+    </section>
 
     <section class="contact-box" id="kontakt">
         <div class="contact-inner">
@@ -699,185 +583,186 @@
         <p>© 2026 event_ops — Kraków. Wszystkie prawa zastrzeżone.</p>
     </footer>
 
-
     <script>
-(function () {
-    // # = ściana/przeszkoda, . = podłoga, G = cel, P = ludzik (OPS), C = case
-    const levels = [
-        [
-            "#######",
-            "#..G..#",
-            "#..#..#",
-            "#..C..#",
-            "#..P..#",
-            "#.....#",
-            "#######"
-        ],
-        [
-            "#######",
-            "#G....#",
-            "#.###.#",
-            "#...C.#",
-            "#..P..#",
-            "#.....#",
-            "#######"
-        ],
-        [
-            "#######",
-            "#...G.#",
-            "#.#.#.#",
-            "#.#C..#",
-            "#..P#.#",
-            "#.....#",
-            "#######"
-        ],
-        [
-            "#######",
-            "#.G..G#",
-            "#..#..#",
-            "#.C.C.#",
-            "#..P..#",
-            "#.....#",
-            "#######"
-        ]
-    ];
+    (function () {
+        const levels = [
+            [
+                "#######",
+                "#..G..#",
+                "#..#..#",
+                "#..C..#",
+                "#..P..#",
+                "#.....#",
+                "#######"
+            ],
+            [
+                "#######",
+                "#G....#",
+                "#.###.#",
+                "#...C.#",
+                "#..P..#",
+                "#.....#",
+                "#######"
+            ],
+            [
+                "#######",
+                "#...G.#",
+                "#.#.#.#",
+                "#.#C..#",
+                "#..P#.#",
+                "#.....#",
+                "#######"
+            ],
+            [
+                "#######",
+                "#.G..G#",
+                "#..#..#",
+                "#.C.C.#",
+                "#..P..#",
+                "#.....#",
+                "#######"
+            ]
+        ];
 
-    const boardEl = document.getElementById("gameBoard");
-    const levelEl = document.getElementById("levelCount");
-    const moveEl = document.getElementById("moveCount");
-    const statusEl = document.getElementById("gameStatus");
-    const resetBtn = document.getElementById("resetGameBtn");
-    const nextBtn = document.getElementById("nextLevelBtn");
+        const boardEl = document.getElementById("gameBoard");
+        const levelEl = document.getElementById("levelCount");
+        const moveEl = document.getElementById("moveCount");
+        const statusEl = document.getElementById("gameStatus");
+        const resetBtn = document.getElementById("resetGameBtn");
+        const nextBtn = document.getElementById("nextLevelBtn");
 
-    let currentLevel = 0;
-    let walls = new Set();
-    let goals = new Set();
-    let cases = new Set();
-    let player = { r: 0, c: 0 };
-    let moves = 0;
-    let won = false;
+        if (!boardEl || !levelEl || !moveEl || !statusEl || !resetBtn || !nextBtn) return;
 
-    const key = (r, c) => `${r},${c}`;
+        let currentLevel = 0;
+        let walls = new Set();
+        let goals = new Set();
+        let cases = new Set();
+        let player = { r: 0, c: 0 };
+        let moves = 0;
+        let won = false;
 
-    function initGame(levelIndex = currentLevel) {
-        currentLevel = levelIndex;
-        const map = levels[currentLevel];
+        const key = (r, c) => `${r},${c}`;
 
-        walls.clear();
-        goals.clear();
-        cases.clear();
-        moves = 0;
-        won = false;
+        function initGame(levelIndex = currentLevel) {
+            currentLevel = levelIndex;
+            const map = levels[currentLevel];
 
-        levelEl.textContent = `${currentLevel + 1} / ${levels.length}`;
-        moveEl.textContent = "0";
-        statusEl.textContent = "";
-        nextBtn.classList.remove("visible");
-        nextBtn.textContent = currentLevel < levels.length - 1 ? "Następny poziom →" : "Zagraj od 1. poziomu";
+            walls.clear();
+            goals.clear();
+            cases.clear();
+            moves = 0;
+            won = false;
 
-        for (let r = 0; r < map.length; r++) {
-            for (let c = 0; c < map[r].length; c++) {
-                const ch = map[r][c];
-                if (ch === "#") walls.add(key(r, c));
-                if (ch === "G") goals.add(key(r, c));
-                if (ch === "C") cases.add(key(r, c));
-                if (ch === "P") player = { r, c };
-            }
-        }
-        render();
-    }
+            levelEl.textContent = `${currentLevel + 1} / ${levels.length}`;
+            moveEl.textContent = "0";
+            statusEl.textContent = "";
+            nextBtn.classList.remove("visible");
+            nextBtn.textContent = currentLevel < levels.length - 1 ? "Następny poziom →" : "Zagraj od 1. poziomu";
 
-    function render() {
-        const map = levels[currentLevel];
-        boardEl.innerHTML = "";
-        for (let r = 0; r < map.length; r++) {
-            for (let c = 0; c < map[r].length; c++) {
-                const k = key(r, c);
-                const cell = document.createElement("div");
-                cell.className = "cell";
-
-                if (walls.has(k)) {
-                    cell.classList.add("cell-wall");
-                    cell.textContent = "■";
-                } else if (player.r === r && player.c === c) {
-                    cell.classList.add("cell-player");
-                    cell.textContent = "OPS";
-                } else if (cases.has(k)) {
-                    cell.classList.add("cell-case");
-                    if (goals.has(k)) cell.classList.add("cell-case-done");
-                    cell.textContent = "CASE";
-                } else if (goals.has(k)) {
-                    cell.classList.add("cell-goal");
-                    cell.textContent = "CEL";
-                } else {
-                    cell.classList.add("cell-floor");
+            for (let r = 0; r < map.length; r++) {
+                for (let c = 0; c < map[r].length; c++) {
+                    const ch = map[r][c];
+                    if (ch === "#") walls.add(key(r, c));
+                    if (ch === "G") goals.add(key(r, c));
+                    if (ch === "C") cases.add(key(r, c));
+                    if (ch === "P") player = { r, c };
                 }
-                boardEl.appendChild(cell);
+            }
+            render();
+        }
+
+        function render() {
+            const map = levels[currentLevel];
+            boardEl.innerHTML = "";
+            for (let r = 0; r < map.length; r++) {
+                for (let c = 0; c < map[r].length; c++) {
+                    const k = key(r, c);
+                    const cell = document.createElement("div");
+                    cell.className = "cell";
+
+                    if (walls.has(k)) {
+                        cell.classList.add("cell-wall");
+                        cell.textContent = "■";
+                    } else if (player.r === r && player.c === c) {
+                        cell.classList.add("cell-player");
+                        cell.textContent = "OPS";
+                    } else if (cases.has(k)) {
+                        cell.classList.add("cell-case");
+                        if (goals.has(k)) cell.classList.add("cell-case-done");
+                        cell.textContent = "CASE";
+                    } else if (goals.has(k)) {
+                        cell.classList.add("cell-goal");
+                        cell.textContent = "CEL";
+                    } else {
+                        cell.classList.add("cell-floor");
+                    }
+                    boardEl.appendChild(cell);
+                }
             }
         }
-    }
 
-    function move(dir) {
-        if (won) return;
-        const deltas = {
-            up: [-1, 0],
-            down: [1, 0],
-            left: [0, -1],
-            right: [0, 1]
-        };
-        const [dr, dc] = deltas[dir] || [0, 0];
-        const nr = player.r + dr;
-        const nc = player.c + dc;
-        const nk = key(nr, nc);
+        function move(dir) {
+            if (won) return;
+            const deltas = {
+                up: [-1, 0],
+                down: [1, 0],
+                left: [0, -1],
+                right: [0, 1]
+            };
+            const [dr, dc] = deltas[dir] || [0, 0];
+            const nr = player.r + dr;
+            const nc = player.c + dc;
+            const nk = key(nr, nc);
 
-        if (walls.has(nk)) return;
+            if (walls.has(nk)) return;
 
-        if (cases.has(nk)) {
-            const br = nr + dr;
-            const bc = nc + dc;
-            const bk = key(br, bc);
-            if (walls.has(bk) || cases.has(bk)) return;
-            cases.delete(nk);
-            cases.add(bk);
+            if (cases.has(nk)) {
+                const br = nr + dr;
+                const bc = nc + dc;
+                const bk = key(br, bc);
+                if (walls.has(bk) || cases.has(bk)) return;
+                cases.delete(nk);
+                cases.add(bk);
+            }
+
+            player = { r: nr, c: nc };
+            moves += 1;
+            moveEl.textContent = String(moves);
+
+            if ([...cases].every((ck) => goals.has(ck))) {
+                won = true;
+                statusEl.textContent = `Poziom ${currentLevel + 1} zaliczony w ${moves} ruchach!`;
+                nextBtn.classList.add("visible");
+            }
+            render();
         }
 
-        player = { r: nr, c: nc };
-        moves += 1;
-        moveEl.textContent = String(moves);
+        document.addEventListener("keydown", (e) => {
+            const map = {
+                ArrowUp: "up",
+                ArrowDown: "down",
+                ArrowLeft: "left",
+                ArrowRight: "right"
+            };
+            if (map[e.key]) {
+                e.preventDefault();
+                move(map[e.key]);
+            }
+        });
 
-        if ([...cases].every((ck) => goals.has(ck))) {
-            won = true;
-            statusEl.textContent = `Poziom ${currentLevel + 1} zaliczony w ${moves} ruchach!`;
-            nextBtn.classList.add("visible");
-        }
-        render();
-    }
+        document.querySelectorAll(".dpad-btn").forEach((btn) => {
+            btn.addEventListener("click", () => move(btn.dataset.dir));
+        });
 
-    document.addEventListener("keydown", (e) => {
-        const map = {
-            ArrowUp: "up",
-            ArrowDown: "down",
-            ArrowLeft: "left",
-            ArrowRight: "right"
-        };
-        if (map[e.key]) {
-            e.preventDefault();
-            move(map[e.key]);
-        }
-    });
+        resetBtn.addEventListener("click", () => initGame(currentLevel));
+        nextBtn.addEventListener("click", () => {
+            const nextIdx = currentLevel < levels.length - 1 ? currentLevel + 1 : 0;
+            initGame(nextIdx);
+        });
 
-    document.querySelectorAll(".dpad-btn").forEach((btn) => {
-        btn.addEventListener("click", () => move(btn.dataset.dir));
-    });
-
-    resetBtn.addEventListener("click", () => initGame(currentLevel));
-    nextBtn.addEventListener("click", () => {
-        const nextIdx = currentLevel < levels.length - 1 ? currentLevel + 1 : 0;
-        initGame(nextIdx);
-    });
-
-    initGame(0);
-})();
+        initGame(0);
+    })();
+    </script>
 
 </body>
 </html>
