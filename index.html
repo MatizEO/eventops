@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>event_ops — Stagehand, Technicy, Riggerzy | Kraków</title>
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0e0a12;--panel:#16111c;--panel2:#1d1526;--pink:#ff2a85;--pink2:#e6277a;--text:#fff;--muted:#c2bacd;--line:rgba(255,255,255,.09);--ok:#38d996}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:76px}
+body{font-family:'Inter','Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden;
+background-image:radial-gradient(900px 500px at 50% -80px,rgba(255,42,133,.16),transparent 70%)}
+h1,h2,h3,.brand-text{font-family:'Barlow Condensed','Segoe UI',Arial,sans-serif}
+a:focus-visible,button:focus-visible{outline:2px solid var(--pink);outline-offset:3px}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@keyframes pulseDot{0%,100%{box-shadow:0 0 0 0 rgba(255,42,133,.7)}50%{box-shadow:0 0 0 8px rgba(255,42,133,0)}}
+
+.topbar{position:sticky;top:0;z-index:20;background:rgba(14,10,18,.82);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+header{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px 20px;max-width:1060px;margin:0 auto;padding:12px 24px}
+.brand-text{font-size:1.7rem;font-weight:800;letter-spacing:.5px;color:#fff;text-decoration:none;transition:color .25s}
+.brand-text:hover{color:var(--pink)}
+nav{display:flex;gap:22px;flex-wrap:wrap;font-size:.82rem;letter-spacing:1.3px}
+nav a{position:relative;color:#dcd6e5;text-decoration:none;text-transform:uppercase;padding:4px 0;transition:color .25s}
+nav a::after{content:'';position:absolute;left:0;bottom:0;width:0;height:2px;background:var(--pink);transition:width .25s}
+nav a:hover{color:#fff}nav a:hover::after{width:100%}
+
+.hero{max-width:880px;margin:0 auto;padding:64px 24px 60px;text-align:center;animation:fadeUp .7s ease-out both}
+.hero-logo{max-width:100%;max-height:130px;width:auto;height:auto;margin:0 auto 22px;display:block;transition:transform .35s,filter .35s}
+.hero-logo:hover{transform:scale(1.03);filter:drop-shadow(0 0 18px rgba(255,42,133,.3))}
+.role-bar{display:inline-flex;align-items:center;gap:10px;color:var(--pink);font-size:.9rem;font-weight:600;letter-spacing:1.6px;text-transform:uppercase;margin-bottom:14px}
+.status-dot{width:8px;height:8px;border-radius:50%;background:var(--pink);animation:pulseDot 2s infinite}
+.hero h1{font-size:clamp(2.1rem,6vw,3.3rem);line-height:1.08;font-weight:800;max-width:760px;margin:0 auto 18px}
+.hero p{color:#cfc8d8;font-size:1.08rem;max-width:640px;margin:0 auto 28px}
+
+.carry-scene{max-width:560px;margin:0 auto 30px;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:linear-gradient(#1a1222,#120d18);box-shadow:0 18px 50px rgba(0,0,0,.45),inset 0 0 40px rgba(255,42,133,.05)}
+.carry-svg{width:100%;height:auto;display:block}
+
+.cta-group{display:flex;justify-content:center;flex-wrap:wrap;gap:14px}
+.btn,.btn-secondary{display:inline-block;padding:13px 26px;color:#fff;text-decoration:none;border-radius:6px;font-weight:600;font-size:.95rem;transition:transform .2s,background-color .2s,border-color .2s,color .2s,box-shadow .25s}
+.btn{background:var(--pink2)}
+.btn:hover{background:var(--pink);transform:translateY(-2px);box-shadow:0 8px 24px rgba(255,42,133,.38)}
+.btn-secondary{border:1px solid rgba(255,255,255,.22)}
+.btn-secondary:hover{border-color:var(--pink);color:var(--pink);transform:translateY(-2px)}
+
+section h2{text-align:center;font-size:clamp(1.8rem,4vw,2.3rem);font-weight:700;margin-bottom:28px}
+.offer,.workflow-section,.standards,.game-section,.contact-box{max-width:1060px;margin:0 auto 72px;padding:0 24px}
+.cards,.steps-grid,.standards-box{display:grid;gap:18px}
+.cards{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.steps-grid{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.card,.step-card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:26px 22px;transition:transform .25s,border-color .25s,box-shadow .25s}
+.card{border-top:3px solid var(--pink)}
+.card:hover,.step-card:hover{transform:translateY(-4px);border-color:rgba(255,42,133,.5);box-shadow:0 12px 28px rgba(0,0,0,.45)}
+.card h3{font-size:1.6rem;margin-bottom:8px}
+.card p,.step-card p{color:var(--muted);font-size:.93rem}
+.step-num{display:inline-block;font-size:.75rem;font-weight:700;letter-spacing:1.5px;color:var(--pink);background:rgba(255,42,133,.12);border:1px solid rgba(255,42,133,.3);padding:3px 9px;border-radius:999px;margin-bottom:12px}
+.step-card h3{font-size:1.4rem;margin-bottom:6px}
+.standards-box{grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:22px;background:linear-gradient(135deg,var(--panel),#1b1224);border:1px solid rgba(255,42,133,.28);border-radius:10px;padding:28px 24px}
+.standards-item strong{display:block;color:var(--pink);font-size:.98rem;margin-bottom:4px}
+.standards-item span{color:#cfc8d8;font-size:.9rem}
+
+.game-box{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:30px 18px;text-align:center;box-shadow:0 18px 50px rgba(0,0,0,.35)}
+.game-box h2{margin-bottom:8px}
+.game-sub{color:var(--muted);font-size:.93rem;max-width:560px;margin:0 auto 18px}
+.game-hud{display:flex;justify-content:center;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:16px;font-size:.9rem}
+.game-hud strong{color:var(--pink)}
+.level-tag{font-size:.8rem;padding:3px 10px;border-radius:999px;background:rgba(255,42,133,.14);border:1px solid rgba(255,42,133,.35);color:#ff77b1;font-weight:600}
+.game-btn{background:#231b2b;color:#fff;border:1px solid rgba(255,42,133,.4);border-radius:6px;padding:6px 14px;cursor:pointer;font:inherit;font-size:.85rem;transition:background .2s,transform .15s}
+.game-btn:hover{background:var(--pink2);transform:translateY(-1px)}
+.game-board{display:inline-grid;gap:3px;background:#0b0810;padding:10px;border-radius:10px;border:1px solid var(--line);touch-action:none;max-width:100%}
+.cell{width:var(--cs,40px);height:var(--cs,40px);border-radius:6px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.62rem;user-select:none;position:relative}
+.cell-floor{background:#1a1422}
+.cell-wall{background:repeating-linear-gradient(45deg,#2c2238 0 6px,#251c30 6px 12px);border:1px solid rgba(255,255,255,.06)}
+.cell-goal{background:rgba(255,42,133,.12);border:2px dashed var(--pink);color:var(--pink);font-size:.58rem}
+.cell-case{background:#2b1829;border:2px solid var(--pink);color:#fff;box-shadow:0 0 12px rgba(255,42,133,.3);letter-spacing:.5px}
+.cell-case::before{content:'';position:absolute;left:0;right:0;top:50%;height:2px;background:rgba(255,42,133,.5)}
+.cell-case span{position:relative;background:#2b1829;padding:0 3px}
+.cell-case-done{background:#143326;border-color:var(--ok);color:#9bf6cc;box-shadow:0 0 12px rgba(56,217,150,.35)}
+.cell-case-done::before{background:rgba(56,217,150,.5)}.cell-case-done span{background:#143326}
+.cell-player{background:#1a1422}
+.cell-player::before{content:'';width:46%;height:46%;border-radius:50%;background:#fff;box-shadow:0 0 12px rgba(255,42,133,.6);margin-top:18%}
+.cell-player::after{content:'';position:absolute;width:56%;height:26%;border-radius:50% 50% 10% 10%;background:var(--pink);top:14%}
+.game-controls{margin-top:16px;display:flex;flex-direction:column;align-items:center;gap:8px}
+.dpad-row{display:flex;gap:8px}
+.dpad-btn{width:48px;height:42px;background:#231b2b;color:#fff;border:1px solid rgba(255,255,255,.16);border-radius:8px;font-size:1rem;cursor:pointer;touch-action:manipulation}
+.dpad-btn:active{background:var(--pink);color:#0e0a12}
+.game-status{margin-top:14px;min-height:24px;font-weight:600;color:var(--ok)}
+.game-next{display:none;margin-top:8px;background:var(--pink2);color:#fff;border:0;border-radius:6px;padding:10px 20px;font:inherit;font-weight:600;cursor:pointer}
+.game-next:hover{background:var(--pink)}.game-next.visible{display:inline-block}
+
+.contact-inner{background:linear-gradient(135deg,var(--panel),#1b1224);border:1px solid var(--line);border-radius:10px;padding:36px 24px;text-align:center}
+.contact-inner h2{margin-bottom:10px}
+.contact-inner p{color:#cfc8d8;margin-bottom:18px}
+.phone-link{display:inline-block;font-family:'Barlow Condensed',sans-serif;font-size:2.4rem;font-weight:800;color:var(--pink);text-decoration:none;letter-spacing:1px;transition:transform .2s,text-shadow .2s}
+.phone-link:hover{transform:scale(1.05);text-shadow:0 0 18px rgba(255,42,133,.5)}
+footer{text-align:center;padding:30px 24px;border-top:1px solid var(--line);color:#968ea2;font-size:.85rem}
+@media(max-width:480px){.cell{--cs:33px}.game-board{gap:2px;padding:7px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div class="topbar">
+<header>
+<a href="#" class="brand-text">event_ops</a>
+<nav>
+<a href="#ekipy">Ekipy</a>
+<a href="#wspolpraca">Współpraca</a>
+<a href="#minigra">Minigra</a>
+<a href="#kontakt">Kontakt</a>
+</nav>
+</header>
+</div>
+
+<section class="hero">
+<img src="logot.png" alt="event_ops" class="hero-logo">
+<div class="role-bar"><span class="status-dot"></span>Kraków • Stagehand • Technicy • Riggerzy</div>
+<h1>Ekipy na scenę, halę i zaplecze eventowe w Krakowie.</h1>
+<p>Zapewniamy ludzi do realizacji produkcyjnych, załadunków, budowy scenografii i prac technicznych – tam, gdzie liczy się czas, BHP i sprawna koordynacja.</p>
+
+<div class="carry-scene">
+<svg class="carry-svg" viewBox="0 0 440 240" role="img" aria-label="Animacja: pracownik wnosi case po schodach na scenę">
+<defs>
+<linearGradient id="beam" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff2a85" stop-opacity=".28"/><stop offset="1" stop-color="#ff2a85" stop-opacity="0"/></linearGradient>
+<linearGradient id="stairG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a2d49"/><stop offset="1" stop-color="#1c1426"/></linearGradient>
+</defs>
+<line x1="0" y1="14" x2="440" y2="14" stroke="#4a3d5a" stroke-width="3"/>
+<line x1="0" y1="24" x2="440" y2="24" stroke="#4a3d5a" stroke-width="2"/>
+<path d="M0 14 L22 24 L44 14 L66 24 L88 14 L110 24 L132 14 L154 24 L176 14 L198 24 L220 14 L242 24 L264 14 L286 24 L308 14 L330 24 L352 14 L374 24 L396 14 L418 24 L440 14" fill="none" stroke="#4a3d5a" stroke-width="1.5"/>
+<polygon points="300,24 340,24 400,225 240,225" fill="url(#beam)"/>
+<polygon points="90,24 120,24 170,225 40,225" fill="url(#beam)" opacity=".7"/>
+<rect x="292" y="24" width="56" height="10" rx="3" fill="#2c2238"/><rect x="84" y="24" width="42" height="10" rx="3" fill="#2c2238"/>
+<path d="M0 240 L0 205 L120 205 L120 187 L156 187 L156 169 L192 169 L192 151 L228 151 L228 133 L264 133 L264 115 L440 115 L440 240 Z" fill="url(#stairG)"/>
+<path d="M0 205 L120 205 L120 187 L156 187 L156 169 L192 169 L192 151 L228 151 L228 133 L264 133 L264 115 L440 115" fill="none" stroke="#ff2a85" stroke-width="2.5" stroke-linejoin="round"/>
+<g id="fig" stroke-linecap="round" stroke-linejoin="round" fill="none">
+<polyline id="legB" stroke="#8f84a0" stroke-width="5"/><line id="bootB" stroke="#6f6580" stroke-width="5"/>
+<line id="torso" stroke="#fff" stroke-width="7"/>
+<polyline id="legA" stroke="#e6e1ec" stroke-width="5"/><line id="bootA" stroke="#bdb3ca" stroke-width="5"/>
+<circle id="head" r="8" fill="#fff" stroke="none"/>
+<path id="hat" fill="#ff2a85" stroke="none"/><line id="brim" stroke="#ff2a85" stroke-width="3"/>
+<g id="caseG"><rect x="-18" y="-12" width="36" height="24" rx="3" fill="#231b2b" stroke="#ff2a85" stroke-width="2.3"/><line x1="-18" y1="0" x2="18" y2="0" stroke="#ff2a85" stroke-width="1.4" opacity=".7"/><rect x="-3.5" y="-3.5" width="7" height="7" rx="1" fill="#ff2a85" stroke="none"/></g>
+<line id="armB" stroke="#8f84a0" stroke-width="4.5"/><line id="armA" stroke="#fff" stroke-width="4.5"/>
+</g>
+</svg>
+</div>
+
+<div class="cta-group">
+<a href="tel:+48500536800" class="btn">Zadzwoń: 500 536 800</a>
+<a href="sms:+48500536800" class="btn-secondary">Wyślij SMS</a>
+</div>
+</section>
+
+<section class="offer" id="ekipy">
+<h2>Kogo zapewniamy</h2>
+<div class="cards">
+<div class="card"><h3>Stagehand</h3><p>Załadunek i rozładunek sprzętu, praca przy scenie, pomoc przy montażu i demontażu konstrukcji oraz zaplecza na terenie Krakowa.</p></div>
+<div class="card"><h3>Technicy</h3><p>Wsparcie techniczne podczas przygotowań i trwania wydarzenia – sprawne działanie na planie, hali i scenie.</p></div>
+<div class="card"><h3>Riggerzy</h3><p>Prace podwieszane i obsługa systemów scenicznych z zachowaniem zasad bezpieczeństwa i wymogów produkcji.</p></div>
+</div>
+</section>
+
+<section class="workflow-section" id="wspolpraca">
+<h2>Jak wygląda współpraca</h2>
+<div class="steps-grid">
+<div class="step-card"><span class="step-num">KROK 01</span><h3>Zgłoszenie i termin</h3><p>Dajesz znać telefonicznie lub SMS-em: data, lokalizacja w Krakowie, godzina call time, zakres prac i liczba osób.</p></div>
+<div class="step-card"><span class="step-num">KROK 02</span><h3>Dobór składu</h3><p>Potwierdzam dostępność ekipy – stagehandów, techników lub riggerów – oraz ustalenia co do harmonogramu i zmian.</p></div>
+<div class="step-card"><span class="step-num">KROK 03</span><h3>Realizacja na obiekcie</h3><p>Ekipa stawia się na czas z odpowiednim nastawieniem do pracy na hali, scenie lub zapleczu z zachowaniem zasad BHP.</p></div>
+<div class="step-card"><span class="step-num">KROK 04</span><h3>Rozliczenie po sztuce</h3><p>Jasne podsumowanie przepracowanego czasu i zrealizowanego zakresu bez zbędnego zamieszania po zakończeniu prac.</p></div>
+</div>
+</section>
+
+<section class="standards">
+<div class="standards-box">
+<div class="standards-item"><strong>Punktualność i gotowość</strong><span>stawiennictwo na call time i jasne rozliczenie godzin pracy.</span></div>
+<div class="standards-item"><strong>BHP i bezpieczeństwo</strong><span>praca zgodnie z wymogami obiektu, produkcji i przepisami.</span></div>
+<div class="standards-item"><strong>Lokalnie w Krakowie</strong><span>szybka reakcja na realizacje w Krakowie i okolicach.</span></div>
+</div>
+</section>
+
+<section class="game-section" id="minigra">
+<div class="game-box" id="gameBox">
+<h2>Stagehand Challenge: wepchnij case na strefę</h2>
+<p class="game-sub">Pchaj skrzynie (<strong>CASE</strong>) na oznaczone pola (<strong>CEL</strong>). Skrzynię można tylko pchać, nie ciągnąć. Sterowanie: strzałki lub WASD, <strong>Z</strong> cofa ruch, na telefonie przyciski lub przesunięcie palcem po planszy.</p>
+<div class="game-hud">
+<div>Poziom: <strong id="levelCount">1 / 7</strong></div>
+<span class="level-tag" id="levelDifficulty">Rozgrzewka</span>
+<div>Ruchy: <strong id="moveCount">0</strong></div>
+<button type="button" class="game-btn" id="undoBtn">Cofnij</button>
+<button type="button" class="game-btn" id="resetGameBtn">Resetuj poziom</button>
+</div>
+<div class="game-board" id="gameBoard" role="img" aria-label="Plansza gry w pchanie case'a"></div>
+<div class="game-controls" aria-label="Sterowanie dotykowe">
+<div class="dpad-row"><button type="button" class="dpad-btn" data-dir="up" aria-label="W górę">▲</button></div>
+<div class="dpad-row">
+<button type="button" class="dpad-btn" data-dir="left" aria-label="W lewo">◀</button>
+<button type="button" class="dpad-btn" data-dir="down" aria-label="W dół">▼</button>
+<button type="button" class="dpad-btn" data-dir="right" aria-label="W prawo">▶</button>
+</div>
+</div>
+<div class="game-status" id="gameStatus" aria-live="polite"></div>
+<button type="button" class="game-next" id="nextLevelBtn">Następny poziom</button>
+</div>
+</section>
+
+<section class="contact-box" id="kontakt">
+<div class="contact-inner">
+<h2>Kontakt w sprawie terminu i składu</h2>
+<p>Kraków i okolice – zadzwoń lub napisz SMS z datą, godziną call time oraz potrzebną liczbą osób.</p>
+<a href="tel:+48500536800" class="phone-link">500 536 800</a>
+</div>
+</section>
+
+<footer><p>© 2026 event_ops — Kraków. Wszystkie prawa zastrzeżone.</p></footer>
+
+<script>
+/* ===== Animacja: pracownik wchodzi po schodach z case'em ===== */
+(function () {
+  const $ = id => document.getElementById(id);
+  const el = {};
+  ['legA','legB','bootA','bootB','torso','head','hat','brim','caseG','armA','armB'].forEach(i => el[i] = $(i));
+  if (!el.legA) return;
+
+  const FLOOR = 205, RISE = 18, TREAD = 36, X0 = 120, TOP = 4; // schody: 5 stopni od x=120
+  const A = 26, B = 26;                                        // uda i łydki
+  const ground = x => x < X0 ? FLOOR : FLOOR - RISE * (Math.min(Math.floor((x - X0) / TREAD), TOP) + 1);
+  const smooth = s => s * s * (3 - 2 * s);
+
+  // stopa stawiana co 72 px; stopa A trafia w środki stopni parzystych, B nieparzystych
+  function foot(hx, base) {
+    const u = (hx - base + 18) / 72, k = Math.floor(u), f = u - k, xk = base + 72 * k;
+    if (f < 0.5) return { x: xk, y: ground(xk), air: 0 };
+    const s = (f - 0.5) * 2, e = smooth(s), yS = ground(xk), yE = ground(xk + 72);
+    const x = xk + 72 * e, lift = yE < yS ? 20 : 11;
+    const y = Math.min(yS + (yE - yS) * e - lift * Math.sin(Math.PI * s), ground(x) - 3);
+    return { x, y, air: 1 };
+  }
+  function leg(h, f, legEl, bootEl) {
+    let dx = f.x - h.x, dy = f.y - h.y, d = Math.hypot(dx, dy);
+    const max = (A + B) * 0.985; if (d > max) { dx *= max / d; dy *= max / d; d = max; }
+    const th = Math.atan2(dy, dx), al = Math.acos(Math.max(-1, Math.min(1, (A * A + d * d - B * B) / (2 * A * d))));
+    const kx = h.x + A * Math.cos(th - al), ky = h.y + A * Math.sin(th - al);
+    const fx = h.x + dx, fy = h.y + dy;
+    legEl.setAttribute('points', `${h.x},${h.y} ${kx},${ky} ${fx},${fy}`);
+    bootEl.setAttribute('x1', fx - 1); bootEl.setAttribute('y1', fy + 1); bootEl.setAttribute('x2', fx + 8); bootEl.setAttribute('y2', fy + 1);
+  }
+  const set = (e, o) => { for (const k in o) e.setAttribute(k, o[k]); };
+  let hipY = null;
+
+  function draw(hx, dt) {
+    const a = foot(hx, 138), b = foot(hx, 174);
+    const target = Math.min((a.y + b.y) / 2 - 38, Math.min(a.y, b.y) - 30);
+    hipY = hipY === null ? target : hipY + (target - hipY) * Math.min(1, dt * 9);
+    const h = { x: hx, y: hipY };
+    leg(h, b, el.legB, el.bootB); leg(h, a, el.legA, el.bootA);
+    const sx = hx + 5, sy = hipY - 28, hcx = sx + 4, hcy = sy - 12;
+    set(el.torso, { x1: hx, y1: hipY, x2: sx, y2: sy });
+    set(el.head, { cx: hcx, cy: hcy });
+    el.hat.setAttribute('d', `M${hcx - 9} ${hcy - 1} Q${hcx} ${hcy - 15} ${hcx + 9} ${hcy - 1} Z`);
+    set(el.brim, { x1: hcx - 10, y1: hcy - 1, x2: hcx + 12, y2: hcy - 1 });
+    const cx = sx + 22, cy = sy + 14;
+    el.caseG.setAttribute('transform', `translate(${cx},${cy})`);
+    set(el.armB, { x1: sx, y1: sy + 2, x2: cx - 12, y2: cy + 9 });
+    set(el.armA, { x1: sx, y1: sy + 2, x2: cx - 4, y2: cy + 12 });
+  }
+
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) { draw(215, 1); return; }
+  const SPEED = 84, START = -50, END = 500;
+  let t0 = performance.now(), last = t0;
+  (function loop(now) {
+    const dt = Math.min(0.05, (now - last) / 1000); last = now;
+    const hx = START + ((now - t0) / 1000) * SPEED;
+    if (hx > END) { t0 = now; hipY = null; }
+    draw(hx > END ? START : hx, dt);
+    requestAnimationFrame(loop);
+  })(t0);
+})();
+
+/* ===== Minigra: Stagehand Challenge (wszystkie poziomy sprawdzone solverem) ===== */
+(function () {
+  const levels = [
+    { diff: 'Rozgrzewka', map: ['#######','#.....#','#.PC.G#','#.....#','#######'] },
+    { diff: 'Rozgrzewka', map: ['#######','#..G..#','#.....#','#.PC..#','#.....#','#######'] },
+    { diff: 'Łatwy', map: ['#######','#..G..#','#..#..#','#..C..#','#..P..#','#.....#','#######'] },
+    { diff: 'Średni', map: ['########','#.P....#','#......#','#.G##.##','#..C...#','#..##..#','########'] },
+    { diff: 'Średni+', map: ['########','#..G..##','##.....#','#...C..#','#..P#CG#','#..##..#','########'] },
+    { diff: 'Hardcore', map: ['########','##.....#','#GG....#','#...##.#','#P#.#..#','#.CC##.#','#.#....#','########'] },
+    { diff: 'Koszmar na hali', map: ['#########','#G...CG.#','#..##...#','#.#P#G..#','#.C.....#','##C...###','##......#','#########'] }
+  ];
+  const $ = id => document.getElementById(id);
+  const boardEl = $('gameBoard'), levelEl = $('levelCount'), diffEl = $('levelDifficulty'),
+        moveEl = $('moveCount'), statusEl = $('gameStatus'), resetBtn = $('resetGameBtn'),
+        undoBtn = $('undoBtn'), nextBtn = $('nextLevelBtn'), box = $('gameBox');
+  if (!boardEl) return;
+
+  let lvl = 0, walls, goals, cases, player, moves, won, history;
+  const key = (r, c) => r + ',' + c;
+
+  function init(i) {
+    lvl = i; const L = levels[i]; walls = new Set(); goals = new Set(); cases = new Set();
+    moves = 0; won = false; history = [];
+    L.map.forEach((row, r) => [...row].forEach((ch, c) => {
+      if (ch === '#') walls.add(key(r, c));
+      if (ch === 'G') goals.add(key(r, c));
+      if (ch === 'C') cases.add(key(r, c));
+      if (ch === 'P') player = { r, c };
+    }));
+    levelEl.textContent = `${i + 1} / ${levels.length}`; diffEl.textContent = L.diff;
+    statusEl.textContent = ''; nextBtn.classList.remove('visible');
+    nextBtn.textContent = i < levels.length - 1 ? 'Następny poziom' : 'Zagraj od 1. poziomu';
+    render();
+  }
+
+  function render() {
+    const map = levels[lvl].map;
+    boardEl.style.gridTemplateColumns = `repeat(${map[0].length}, var(--cs, 40px))`;
+    moveEl.textContent = moves;
+    const frag = document.createDocumentFragment();
+    map.forEach((row, r) => [...row].forEach((_, c) => {
+      const k = key(r, c), d = document.createElement('div');
+      d.className = 'cell';
+      if (walls.has(k)) d.classList.add('cell-wall');
+      else if (cases.has(k)) {
+        d.classList.add('cell-case'); if (goals.has(k)) d.classList.add('cell-case-done');
+        d.innerHTML = '<span>CASE</span>';
+      } else if (goals.has(k)) { d.classList.add('cell-goal'); d.textContent = 'CEL'; }
+      else d.classList.add('cell-floor');
+      if (player.r === r && player.c === c) { d.className = 'cell cell-player'; d.textContent = ''; }
+      frag.appendChild(d);
+    }));
+    boardEl.replaceChildren(frag);
+  }
+
+  function move(dir) {
+    if (won) return;
+    const [dr, dc] = { up: [-1, 0], down: [1, 0], left: [0, -1], right: [0, 1] }[dir];
+    const nr = player.r + dr, nc = player.c + dc, nk = key(nr, nc);
+    if (walls.has(nk)) return;
+    const snap = { player: { ...player }, cases: new Set(cases), moves };
+    if (cases.has(nk)) {
+      const bk = key(nr + dr, nc + dc);
+      if (walls.has(bk) || cases.has(bk)) return;
+      cases.delete(nk); cases.add(bk);
+    }
+    history.push(snap); player = { r: nr, c: nc }; moves++;
+    if ([...cases].every(k => goals.has(k))) {
+      won = true;
+      statusEl.textContent = lvl < levels.length - 1
+        ? `Poziom ${lvl + 1} zaliczony w ${moves} ruchach!`
+        : `Gratulacje! Wszystkie ${levels.length} poziomów zaliczone (ostatni w ${moves} ruchach)!`;
+      nextBtn.classList.add('visible');
+    }
+    render();
+  }
+
+  function undo() {
+    if (!history.length) return;
+    const s = history.pop(); player = s.player; cases = s.cases; moves = s.moves; won = false;
+    statusEl.textContent = ''; nextBtn.classList.remove('visible'); render();
+  }
+
+  // strzałki przechwytujemy tylko, gdy plansza jest widoczna – reszta strony nadal się przewija
+  let inView = false;
+  new IntersectionObserver(e => { inView = e[0].isIntersecting; }, { threshold: 0.5 }).observe(box);
+  const keys = { ArrowUp: 'up', ArrowDown: 'down', ArrowLeft: 'left', ArrowRight: 'right', w: 'up', s: 'down', a: 'left', d: 'right' };
+  document.addEventListener('keydown', e => {
+    if (!inView || e.ctrlKey || e.metaKey || e.altKey) return;
+    const k = e.key.length === 1 ? e.key.toLowerCase() : e.key;
+    if (k === 'z' || k === 'u') { e.preventDefault(); undo(); }
+    else if (keys[k]) { e.preventDefault(); move(keys[k]); }
+  });
+
+  document.querySelectorAll('.dpad-btn').forEach(b => b.addEventListener('click', () => move(b.dataset.dir)));
+  let tx = 0, ty = 0;
+  boardEl.addEventListener('touchstart', e => { tx = e.touches[0].clientX; ty = e.touches[0].clientY; }, { passive: true });
+  boardEl.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - tx, dy = e.changedTouches[0].clientY - ty;
+    if (Math.max(Math.abs(dx), Math.abs(dy)) < 24) return;
+    move(Math.abs(dx) > Math.abs(dy) ? (dx > 0 ? 'right' : 'left') : (dy > 0 ? 'down' : 'up'));
+  }, { passive: true });
+  resetBtn.addEventListener('click', () => init(lvl));
+  undoBtn.addEventListener('click', undo);
+  nextBtn.addEventListener('click', () => init(lvl < levels.length - 1 ? lvl + 1 : 0));
+  init(0);
+})();
+</script>
+</body>
+</html>
