@@ -12,66 +12,58 @@
             color: #ffffff;
             line-height: 1.6;
         }
-        nav {
-            position: sticky;
-            top: 0;
+        header {
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
+            align-items: center;
             flex-wrap: wrap;
+            gap: 20px;
+            max-width: 1060px;
+            margin: 0 auto;
+            padding: 20px 24px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .brand-logo {
+            height: 44px;
+            width: auto;
+            display: block;
+        }
+        nav {
+            display: flex;
             gap: 24px;
-            padding: 16px 20px;
-            background-color: rgba(14, 10, 18, 0.9);
-            border-bottom: 1px solid rgba(255, 42, 133, 0.18);
+            flex-wrap: wrap;
             font-size: 0.85rem;
-            letter-spacing: 1.5px;
+            letter-spacing: 1.4px;
         }
         nav a {
-            color: #e6e1ec;
+            color: #dcd6e5;
             text-decoration: none;
             text-transform: uppercase;
         }
         nav a:hover { color: #ff2a85; }
         .hero {
-            max-width: 900px;
+            max-width: 860px;
             margin: 0 auto;
-            padding: 48px 20px 56px;
+            padding: 80px 24px 64px;
             text-align: center;
         }
-        .logo-frame {
-            display: inline-block;
-            padding: 12px 18px;
-            border-radius: 12px;
-            background: radial-gradient(circle at center, rgba(255, 42, 133, 0.14), rgba(14, 10, 18, 0.2) 75%);
-            border: 1px solid rgba(255, 42, 133, 0.25);
-            margin-bottom: 28px;
-        }
-        .logo-frame img {
-            display: block;
+        .hero-logo {
             max-width: 100%;
-            width: 420px;
+            max-height: 130px;
+            width: auto;
             height: auto;
-            border-radius: 8px;
-            -webkit-mask-image: linear-gradient(to bottom, #000 82%, transparent 100%);
-            mask-image: linear-gradient(to bottom, #000 82%, transparent 100%);
+            margin: 0 auto 28px;
+            display: block;
         }
-        .tag {
-            display: inline-block;
-            font-size: 0.8rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            color: #ff2a85;
-            margin-bottom: 12px;
-            font-weight: 600;
-        }
-        .hero h1 {
-            font-size: 1.9rem;
-            font-weight: 700;
-            max-width: 720px;
-            margin: 0 auto 24px;
+        .hero p {
+            color: #cfc8d8;
+            font-size: 1.15rem;
+            max-width: 620px;
+            margin: 0 auto 32px;
         }
         .btn {
             display: inline-block;
-            padding: 12px 24px;
+            padding: 13px 26px;
             background-color: #e6277a;
             color: #ffffff;
             text-decoration: none;
@@ -81,14 +73,14 @@
         }
         .btn:hover { background-color: #ff2a85; }
         .offer {
-            max-width: 1020px;
+            max-width: 1060px;
             margin: 0 auto;
-            padding: 20px 20px 70px;
-            text-align: center;
+            padding: 24px 24px 80px;
         }
         .offer h2 {
-            font-size: 1.4rem;
-            margin-bottom: 28px;
+            text-align: center;
+            font-size: 1.5rem;
+            margin-bottom: 32px;
         }
         .cards {
             display: grid;
@@ -96,61 +88,59 @@
             gap: 20px;
         }
         .card {
-            background-color: #17111e;
+            background-color: #16111c;
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 8px;
             padding: 26px 22px;
-            text-align: left;
         }
         .card h3 {
             font-size: 1.05rem;
             margin-bottom: 8px;
-            color: #ffffff;
         }
         .card p {
-            color: #c8c1d1;
-            font-size: 0.9rem;
+            color: #c2bacd;
+            font-size: 0.92rem;
         }
         footer {
             text-align: center;
-            padding: 32px 20px;
+            padding: 32px 24px;
             border-top: 1px solid rgba(255, 255, 255, 0.08);
-            color: #9e96a8;
+            color: #968ea2;
             font-size: 0.85rem;
         }
     </style>
 </head>
 <body>
 
-    <nav>
-        <a href="#o-nas">O nas</a>
-        <a href="#oferta">Oferta</a>
-        <a href="#kontakt">Kontakt</a>
-    </nav>
+    <header>
+        <a href="#"><img src="logo-clean.png" alt="event_ops" class="brand-logo"></a>
+        <nav>
+            <a href="#o-nas">O nas</a>
+            <a href="#oferta">Oferta</a>
+            <a href="#kontakt">Kontakt</a>
+        </nav>
+    </header>
 
     <section class="hero" id="o-nas">
-        <div class="logo-frame">
-            <img src="logo.png" alt="event_ops – Lubimy nosić">
-        </div>
-        <div class="tag">Produkcja &amp; zaplecze wydarzeń</div>
-        <h1>Niezapomniane wydarzenia, imprezy i integracje na najwyższym poziomie.</h1>
+        <img src="logo-clean.png" alt="event_ops" class="hero-logo">
+        <p>Sprawna realizacja, logistyka i zaplecze wydarzeń – od kameralnych spotkań po większe eventy.</p>
         <a href="mailto:kontakt@eventops.pl" class="btn">Zapytaj o wycenę</a>
     </section>
 
     <section class="offer" id="oferta">
-        <h2>Nasza oferta</h2>
+        <h2>Zakres działań</h2>
         <div class="cards">
             <div class="card">
-                <h3>Imprezy firmowe</h3>
-                <p>Sprawna organizacja i obsługa wydarzeń integracyjnych oraz firmowych.</p>
+                <h3>Wydarzenia firmowe</h3>
+                <p>Kompleksowe wsparcie organizacyjne i operacyjne dla firm.</p>
             </div>
             <div class="card">
-                <h3>Wydarzenia plenerowe</h3>
-                <p>Przygotowanie i wsparcie operacyjne eventów na otwartej przestrzeni.</p>
+                <h3>Obsługa i logistyka</h3>
+                <p>Koordynacja na miejscu, przygotowanie przestrzeni i zaplecza.</p>
             </div>
             <div class="card">
-                <h3>Konferencje i gale</h3>
-                <p>Rzetelna logistyka, koordynacja i zaplecze na oficjalne spotkania.</p>
+                <h3>Eventy specjalne</h3>
+                <p>Elastyczne realizacje dopasowane do charakteru wydarzenia.</p>
             </div>
         </div>
     </section>
