@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>event_ops</title>
+    <title>event_ops — Stagehand, Technicy, Riggerzy | Kraków</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
         body {
             font-family: 'Segoe UI', Arial, sans-serif;
             background-color: #0e0a12;
@@ -24,7 +25,7 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         }
         .brand-logo {
-            height: 44px;
+            height: 42px;
             width: auto;
             display: block;
         }
@@ -42,9 +43,9 @@
         }
         nav a:hover { color: #ff2a85; }
         .hero {
-            max-width: 860px;
+            max-width: 880px;
             margin: 0 auto;
-            padding: 80px 24px 64px;
+            padding: 76px 24px 64px;
             text-align: center;
         }
         .hero-logo {
@@ -52,14 +53,34 @@
             max-height: 130px;
             width: auto;
             height: auto;
-            margin: 0 auto 28px;
+            margin: 0 auto 24px;
             display: block;
+        }
+        .role-bar {
+            color: #ff2a85;
+            font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: 1.8px;
+            text-transform: uppercase;
+            margin-bottom: 14px;
+        }
+        .hero h1 {
+            font-size: 1.95rem;
+            font-weight: 700;
+            max-width: 740px;
+            margin: 0 auto 18px;
         }
         .hero p {
             color: #cfc8d8;
-            font-size: 1.15rem;
-            max-width: 620px;
+            font-size: 1.08rem;
+            max-width: 640px;
             margin: 0 auto 32px;
+        }
+        .cta-group {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 14px;
         }
         .btn {
             display: inline-block;
@@ -72,10 +93,25 @@
             font-size: 0.95rem;
         }
         .btn:hover { background-color: #ff2a85; }
+        .btn-secondary {
+            display: inline-block;
+            padding: 13px 24px;
+            background-color: transparent;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+        .btn-secondary:hover {
+            border-color: #ff2a85;
+            color: #ff2a85;
+        }
         .offer {
             max-width: 1060px;
             margin: 0 auto;
-            padding: 24px 24px 80px;
+            padding: 20px 24px 72px;
         }
         .offer h2 {
             text-align: center;
@@ -94,13 +130,67 @@
             padding: 26px 22px;
         }
         .card h3 {
-            font-size: 1.05rem;
-            margin-bottom: 8px;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            color: #ffffff;
         }
         .card p {
             color: #c2bacd;
             font-size: 0.92rem;
         }
+        .standards {
+            max-width: 1060px;
+            margin: 0 auto 72px;
+            padding: 0 24px;
+        }
+        .standards-box {
+            background-color: #16111c;
+            border: 1px solid rgba(255, 42, 133, 0.25);
+            border-radius: 8px;
+            padding: 28px 24px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
+        .standards-item strong {
+            display: block;
+            color: #ff2a85;
+            font-size: 0.95rem;
+            margin-bottom: 4px;
+        }
+        .standards-item span {
+            color: #cfc8d8;
+            font-size: 0.9rem;
+        }
+        .contact-box {
+            max-width: 1060px;
+            margin: 0 auto 64px;
+            padding: 0 24px;
+        }
+        .contact-inner {
+            background-color: #16111c;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 8px;
+            padding: 32px 24px;
+            text-align: center;
+        }
+        .contact-inner h2 {
+            font-size: 1.45rem;
+            margin-bottom: 10px;
+        }
+        .contact-inner p {
+            color: #cfc8d8;
+            margin-bottom: 20px;
+        }
+        .phone-link {
+            display: inline-block;
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: #ff2a85;
+            text-decoration: none;
+            letter-spacing: 0.5px;
+        }
+        .phone-link:hover { text-decoration: underline; }
         footer {
             text-align: center;
             padding: 32px 24px;
@@ -115,38 +205,68 @@
     <header>
         <a href="#"><img src="logot.png" alt="event_ops" class="brand-logo"></a>
         <nav>
-            <a href="#o-nas">O nas</a>
-            <a href="#oferta">Oferta</a>
+            <a href="#ekipy">Ekipy</a>
+            <a href="#wspolpraca">Współpraca</a>
             <a href="#kontakt">Kontakt</a>
         </nav>
     </header>
 
-    <section class="hero" id="o-nas">
+    <section class="hero">
         <img src="logot.png" alt="event_ops" class="hero-logo">
-        <p>Sprawna realizacja, logistyka i zaplecze wydarzeń – od kameralnych spotkań po większe eventy.</p>
-        <a href="mailto:kontakt@eventops.pl" class="btn">Zapytaj o wycenę</a>
+        <div class="role-bar">Kraków • Stagehand • Technicy • Riggerzy</div>
+        <h1>Ekipy na scenę, halę i zaplecze eventowe w Krakowie.</h1>
+        <p>Zapewniamy ludzi do realizacji produkcyjnych, załadunków, budowy scenografii i prac technicznych – tam, gdzie liczy się czas, BHP i sprawna koordynacja.</p>
+        <div class="cta-group">
+            <a href="tel:+48500536800" class="btn">Zadzwoń: 500 536 800</a>
+            <a href="sms:+48500536800" class="btn-secondary">Wyślij SMS</a>
+        </div>
     </section>
 
-    <section class="offer" id="oferta">
-        <h2>Zakres działań</h2>
+    <section class="offer" id="ekipy">
+        <h2>Kogo zapewniamy</h2>
         <div class="cards">
             <div class="card">
-                <h3>Wydarzenia firmowe</h3>
-                <p>Kompleksowe wsparcie organizacyjne i operacyjne dla firm.</p>
+                <h3>Stagehand</h3>
+                <p>Załadunek i rozładunek sprzętu, praca przy scenie, pomoc przy montażu i demontażu konstrukcji oraz zaplecza na terenie Krakowa.</p>
             </div>
             <div class="card">
-                <h3>Obsługa i logistyka</h3>
-                <p>Koordynacja na miejscu, przygotowanie przestrzeni i zaplecza.</p>
+                <h3>Technicy</h3>
+                <p>Wsparcie techniczne podczas przygotowań i trwania wydarzenia – sprawne działanie na planie, hali i scenie.</p>
             </div>
             <div class="card">
-                <h3>Eventy specjalne</h3>
-                <p>Elastyczne realizacje dopasowane do charakteru wydarzenia.</p>
+                <h3>Riggerzy</h3>
+                <p>Prace podwieszane i obsługa systemów scenicznych z zachowaniem zasad bezpieczeństwa i wymogów produkcji.</p>
             </div>
         </div>
     </section>
 
-    <footer id="kontakt">
-        <p>© 2026 event_ops. Wszystkie prawa zastrzeżone.</p>
+    <section class="standards" id="wspolpraca">
+        <div class="standards-box">
+            <div class="standards-item">
+                <strong>Punktualność i gotowość</strong>
+                <span>stawiennictwo na call time i jasne rozliczenie godzin pracy.</span>
+            </div>
+            <div class="standards-item">
+                <strong>BHP i bezpieczeństwo</strong>
+                <span>praca zgodnie z wymogami obiektu, produkcji i przepisami.</span>
+            </div>
+            <div class="standards-item">
+                <strong>Lokalnie w Krakowie</strong>
+                <span>szybka reakcja na realizacje w Krakowie i okolicach.</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="contact-box" id="kontakt">
+        <div class="contact-inner">
+            <h2>Kontakt w sprawie terminu i składu</h2>
+            <p>Kraków i okolice — zadzwoń lub napisz SMS z datą, godziną call time oraz potrzebną liczbą osób.</p>
+            <a href="tel:+48500536800" class="phone-link">500 536 800</a>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2026 event_ops — Kraków. Wszystkie prawa zastrzeżone.</p>
     </footer>
 
 </body>
