@@ -1,303 +1,811 @@
-<!-- Wklej style minigierki do sekcji <style> -->
-<style>
-  .game-section {
-    max-width: 1060px;
-    margin: 0 auto 72px;
-    padding: 0 24px;
-  }
-  .game-box {
-    background-color: #16111c;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 10px;
-    padding: 28px 20px;
-    text-align: center;
-  }
-  .game-box h2 {
-    font-size: 1.4rem;
-    margin-bottom: 8px;
-  }
-  .game-sub {
-    color: #c2bacd;
-    font-size: 0.92rem;
-    margin-bottom: 18px;
-  }
-  .game-hud {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 18px;
-    flex-wrap: wrap;
-    margin-bottom: 16px;
-    font-size: 0.9rem;
-    color: #e6e1ec;
-  }
-  .game-hud strong {
-    color: #ff2a85;
-  }
-  .game-reset {
-    background: #231b2b;
-    color: #ffffff;
-    border: 1px solid rgba(255, 42, 133, 0.4);
-    border-radius: 6px;
-    padding: 6px 14px;
-    cursor: pointer;
-    font-size: 0.85rem;
-    transition: background-color 0.2s ease, transform 0.15s ease;
-  }
-  .game-reset:hover {
-    background: #e6277a;
-    transform: translateY(-1px);
-  }
-  .game-board {
-    display: inline-grid;
-    grid-template-columns: repeat(7, 42px);
-    gap: 4px;
-    background: #0e0a12;
-    padding: 10px;
-    border-radius: 8px;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-  }
-  .cell {
-    width: 42px;
-    height: 42px;
-    border-radius: 5px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 700;
-    font-size: 0.8rem;
-    user-select: none;
-  }
-  .cell-floor {
-    background: #1a1422;
-  }
-  .cell-wall {
-    background: #2c2238;
-    border: 1px solid rgba(255, 255, 255, 0.06);
-  }
-  .cell-goal {
-    background: rgba(255, 42, 133, 0.14);
-    border: 1px dashed #ff2a85;
-    color: #ff2a85;
-    font-size: 0.65rem;
-  }
-  .cell-case {
-    background: #2b1829;
-    border: 2px solid #ff2a85;
-    color: #ffffff;
-    box-shadow: 0 0 10px rgba(255, 42, 133, 0.25);
-  }
-  .cell-case-done {
-    background: #163326;
-    border: 2px solid #38d996;
-    color: #9bf6cc;
-  }
-  .cell-player {
-    background: #ff2a85;
-    color: #0e0a12;
-    box-shadow: 0 0 12px rgba(255, 42, 133, 0.5);
-  }
-  .game-controls {
-    margin-top: 16px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-  }
-  .dpad-row {
-    display: flex;
-    gap: 8px;
-  }
-  .dpad-btn {
-    width: 44px;
-    height: 40px;
-    background: #231b2b;
-    color: #ffffff;
-    border: 1px solid rgba(255, 255, 255, 0.16);
-    border-radius: 6px;
-    font-size: 1rem;
-    cursor: pointer;
-  }
-  .dpad-btn:active {
-    background: #ff2a85;
-    color: #0e0a12;
-  }
-  .game-status {
-    margin-top: 14px;
-    min-height: 24px;
-    font-weight: 600;
-    color: #38d996;
-    font-size: 0.95rem;
-  }
-  @media (max-width: 420px) {
-    .game-board {
-      grid-template-columns: repeat(7, 36px);
-    }
-    .cell {
-      width: 36px;
-      height: 36px;
-    }
-  }
-</style>
-
-<!-- Wklej sekcję gry w <body> (np. nad sekcją #kontakt) -->
-<section class="game-section" id="minigra">
-  <div class="game-box">
-    <h2>Stagehand Challenge: Wepchnij case na strefę</h2>
-    <p class="game-sub">Użyj strzałek na klawiaturze lub przycisków poniżej, aby dopchać skrzynię (<strong>CASE</strong>) do oznaczonego punktu (<strong>CEL</strong>).</p>
-
-    <div class="game-hud">
-      <div>Ruchy: <strong id="moveCount">0</strong></div>
-      <button type="button" class="game-reset" id="resetGameBtn">Resetuj planszę</button>
-    </div>
-
-    <div class="game-board" id="gameBoard" role="grid" aria-label="Plansza gry w pchanie case'a"></div>
-
-    <div class="game-controls" aria-label="Sterowanie dotykowe">
-      <div class="dpad-row">
-        <button type="button" class="dpad-btn" data-dir="up" aria-label="W górę">▲</button>
-      </div>
-      <div class="dpad-row">
-        <button type="button" class="dpad-btn" data-dir="left" aria-label="W lewo">◀</button>
-        <button type="button" class="dpad-btn" data-dir="down" aria-label="W dół">▼</button>
-        <button type="button" class="dpad-btn" data-dir="right" aria-label="W prawo">▶</button>
-      </div>
-    </div>
-
-    <div class="game-status" id="gameStatus"></div>
-  </div>
-</section>
-
-<script>
-(function () {
-  // # = przeszkoda/ściana, . = podłoga, G = cel (strefa), P = ludzik, C = case
-  const initialMap = [
-    "#######",
-    "#..G..#",
-    "#..#..#",
-    "#..C..#",
-    "#..P..#",
-    "#.....#",
-    "#######"
-  ];
-
-  const boardEl = document.getElementById("gameBoard");
-  const moveEl = document.getElementById("moveCount");
-  const statusEl = document.getElementById("gameStatus");
-  const resetBtn = document.getElementById("resetGameBtn");
-
-  let walls = new Set();
-  let goals = new Set();
-  let cases = new Set();
-  let player = { r: 0, c: 0 };
-  let moves = 0;
-  let won = false;
-
-  const key = (r, c) => `${r},${c}`;
-
-  function initGame() {
-    walls.clear();
-    goals.clear();
-    cases.clear();
-    moves = 0;
-    won = false;
-    moveEl.textContent = "0";
-    statusEl.textContent = "";
-
-    for (let r = 0; r < initialMap.length; r++) {
-      for (let c = 0; c < initialMap[r].length; c++) {
-        const ch = initialMap[r][c];
-        if (ch === "#") walls.add(key(r, c));
-        if (ch === "G") goals.add(key(r, c));
-        if (ch === "C") cases.add(key(r, c));
-        if (ch === "P") player = { r, c };
-      }
-    }
-    render();
-  }
-
-  function render() {
-    boardEl.innerHTML = "";
-    for (let r = 0; r < initialMap.length; r++) {
-      for (let c = 0; c < initialMap[r].length; c++) {
-        const k = key(r, c);
-        const cell = document.createElement("div");
-        cell.className = "cell";
-
-        if (walls.has(k)) {
-          cell.classList.add("cell-wall");
-          cell.textContent = "■";
-        } else if (player.r === r && player.c === c) {
-          cell.classList.add("cell-player");
-          cell.textContent = "OPS";
-        } else if (cases.has(k)) {
-          cell.classList.add("cell-case");
-          if (goals.has(k)) cell.classList.add("cell-case-done");
-          cell.textContent = "CASE";
-        } else if (goals.has(k)) {
-          cell.classList.add("cell-goal");
-          cell.textContent = "CEL";
-        } else {
-          cell.classList.add("cell-floor");
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>event_ops — Stagehand, Technicy, Riggerzy | Kraków</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: #0e0a12;
+            color: #ffffff;
+            line-height: 1.6;
+            overflow-x: hidden;
         }
-        boardEl.appendChild(cell);
-      }
-    }
-  }
 
-  function move(dir) {
-    if (won) return;
-    const deltas = {
-      up: [-1, 0],
-      down: [1, 0],
-      left: [0, -1],
-      right: [0, 1]
-    };
-    const [dr, dc] = deltas[dir] || [0, 0];
-    const nr = player.r + dr;
-    const nc = player.c + dc;
-    const nk = key(nr, nc);
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(18px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
-    if (walls.has(nk)) return;
+        @keyframes pulseDot {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(255, 42, 133, 0.7);
+            }
+            50% {
+                transform: scale(1.15);
+                box-shadow: 0 0 0 8px rgba(255, 42, 133, 0);
+            }
+        }
 
-    if (cases.has(nk)) {
-      const br = nr + dr;
-      const bc = nc + dc;
-      const bk = key(br, bc);
-      if (walls.has(bk) || cases.has(bk)) return;
-      cases.delete(nk);
-      cases.add(bk);
-    }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            max-width: 1060px;
+            margin: 0 auto;
+            padding: 20px 24px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .brand-logo {
+            height: 42px;
+            width: auto;
+            display: block;
+            transition: transform 0.25s ease, opacity 0.25s ease;
+        }
+        .brand-logo:hover {
+            transform: scale(1.04);
+        }
 
-    player = { r: nr, c: nc };
-    moves += 1;
-    moveEl.textContent = String(moves);
+        nav {
+            display: flex;
+            gap: 24px;
+            flex-wrap: wrap;
+            font-size: 0.85rem;
+            letter-spacing: 1.4px;
+        }
+        nav a {
+            position: relative;
+            color: #dcd6e5;
+            text-decoration: none;
+            text-transform: uppercase;
+            padding-bottom: 4px;
+            transition: color 0.25s ease;
+        }
+        nav a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 2px;
+            background-color: #ff2a85;
+            transition: width 0.25s ease;
+        }
+        nav a:hover {
+            color: #ffffff;
+        }
+        nav a:hover::after {
+            width: 100%;
+        }
 
-    if ([...cases].every((ck) => goals.has(ck))) {
-      won = true;
-      statusEl.textContent = `Case dostarczony w ${moves} ruchach! Dobra robota na scenie.`;
-    }
-    render();
-  }
+        .hero {
+            max-width: 880px;
+            margin: 0 auto;
+            padding: 76px 24px 64px;
+            text-align: center;
+            animation: fadeUp 0.7s ease-out both;
+        }
+        .hero-logo {
+            max-width: 100%;
+            max-height: 130px;
+            width: auto;
+            height: auto;
+            margin: 0 auto 24px;
+            display: block;
+            transition: transform 0.35s ease, filter 0.35s ease;
+        }
+        .hero-logo:hover {
+            transform: scale(1.03);
+            filter: drop-shadow(0 0 18px rgba(255, 42, 133, 0.28));
+        }
+        .role-bar {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: #ff2a85;
+            font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: 1.8px;
+            text-transform: uppercase;
+            margin-bottom: 14px;
+        }
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: #ff2a85;
+            display: inline-block;
+            animation: pulseDot 2s infinite;
+        }
+        .hero h1 {
+            font-size: 1.95rem;
+            font-weight: 700;
+            max-width: 740px;
+            margin: 0 auto 18px;
+        }
+        .hero p {
+            color: #cfc8d8;
+            font-size: 1.08rem;
+            max-width: 640px;
+            margin: 0 auto 28px;
+        }
 
-  document.addEventListener("keydown", (e) => {
-    const map = {
-      ArrowUp: "up",
-      ArrowDown: "down",
-      ArrowLeft: "left",
-      ArrowRight: "right"
-    };
-    if (map[e.key]) {
-      e.preventDefault();
-      move(map[e.key]);
-    }
-  });
+        /* Poprawiona animacja ludzika wchodzącego po 3 stopniach */
+        .carry-scene {
+            max-width: 440px;
+            margin: 0 auto 28px;
+            padding: 12px 16px;
+            background: rgba(22, 17, 28, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .carry-svg {
+            width: 100%;
+            height: 136px;
+            display: block;
+        }
+        .carrier-group {
+            animation: stairClimb 3.2s linear infinite;
+        }
+        .leg-left {
+            transform-box: fill-box;
+            transform-origin: center top;
+            animation: stepLeft 0.4s ease-in-out infinite;
+        }
+        .leg-right {
+            transform-box: fill-box;
+            transform-origin: center top;
+            animation: stepRight 0.4s ease-in-out infinite;
+        }
 
-  document.querySelectorAll(".dpad-btn").forEach((btn) => {
-    btn.addEventListener("click", () => move(btn.dataset.dir));
-  });
+        /* Dokładne dopasowanie do stopni:
+           Podstawa postaci w SVG ma stopy na y=116 i środek na x=75.
+           Schodki:
+           - parter: y=116 (x: 20..115)
+           - 1. stopień: y=98 (x: 115..165) -> przesunięcie y = -18
+           - 2. stopień: y=80 (x: 165..215) -> przesunięcie y = -36
+           - podest górny: y=62 (x: 215..320) -> przesunięcie y = -54
+        */
+        @keyframes stairClimb {
+            0% {
+                opacity: 0;
+                transform: translate(0px, 0px);
+            }
+            10% {
+                opacity: 1;
+                transform: translate(15px, 0px);
+            }
+            25% {
+                transform: translate(45px, 0px);
+            }
+            35% {
+                transform: translate(65px, -18px);
+            }
+            50% {
+                transform: translate(95px, -18px);
+            }
+            60% {
+                transform: translate(115px, -36px);
+            }
+            75% {
+                transform: translate(145px, -36px);
+            }
+            85% {
+                opacity: 1;
+                transform: translate(165px, -54px);
+            }
+            95% {
+                opacity: 1;
+                transform: translate(190px, -54px);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(200px, -54px);
+            }
+        }
 
-  resetBtn.addEventListener("click", initGame);
-  initGame();
-})();
-</script>
+        @keyframes stepLeft {
+            0%, 100% { transform: rotate(22deg); }
+            50% { transform: rotate(-18deg); }
+        }
+        @keyframes stepRight {
+            0%, 100% { transform: rotate(-18deg); }
+            50% { transform: rotate(22deg); }
+        }
+
+        .cta-group {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 14px;
+        }
+        .btn {
+            display: inline-block;
+            padding: 13px 26px;
+            background-color: #e6277a;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.25s ease;
+        }
+        .btn:hover {
+            background-color: #ff2a85;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(255, 42, 133, 0.35);
+        }
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn-secondary {
+            display: inline-block;
+            padding: 13px 24px;
+            background-color: transparent;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: transform 0.2s ease, border-color 0.2s ease, color 0.2s ease, box-shadow 0.25s ease;
+        }
+        .btn-secondary:hover {
+            border-color: #ff2a85;
+            color: #ff2a85;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 42, 133, 0.14);
+        }
+        .btn-secondary:active {
+            transform: translateY(0);
+        }
+
+        .offer {
+            max-width: 1060px;
+            margin: 0 auto;
+            padding: 20px 24px 72px;
+            animation: fadeUp 0.8s ease-out 0.15s both;
+        }
+        .offer h2 {
+            text-align: center;
+            font-size: 1.5rem;
+            margin-bottom: 32px;
+        }
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background-color: #16111c;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 8px;
+            padding: 26px 22px;
+            transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 42, 133, 0.45);
+            background-color: #1b1423;
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.45);
+        }
+        .card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            color: #ffffff;
+            transition: color 0.25s ease;
+        }
+        .card:hover h3 {
+            color: #ff2a85;
+        }
+        .card p {
+            color: #c2bacd;
+            font-size: 0.92rem;
+        }
+
+        .standards {
+            max-width: 1060px;
+            margin: 0 auto 72px;
+            padding: 0 24px;
+            animation: fadeUp 0.8s ease-out 0.25s both;
+        }
+        .standards-box {
+            background-color: #16111c;
+            border: 1px solid rgba(255, 42, 133, 0.25);
+            border-radius: 8px;
+            padding: 28px 24px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            transition: border-color 0.25s ease;
+        }
+        .standards-box:hover {
+            border-color: rgba(255, 42, 133, 0.5);
+        }
+        .standards-item strong {
+            display: block;
+            color: #ff2a85;
+            font-size: 0.95rem;
+            margin-bottom: 4px;
+        }
+        .standards-item span {
+            color: #cfc8d8;
+            font-size: 0.9rem;
+        }
+
+        /* Minigierka */
+        .game-section {
+            max-width: 1060px;
+            margin: 0 auto 72px;
+            padding: 0 24px;
+        }
+        .game-box {
+            background-color: #16111c;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 10px;
+            padding: 28px 20px;
+            text-align: center;
+        }
+        .game-box h2 {
+            font-size: 1.4rem;
+            margin-bottom: 8px;
+        }
+        .game-sub {
+            color: #c2bacd;
+            font-size: 0.92rem;
+            margin-bottom: 18px;
+        }
+        .game-hud {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 18px;
+            flex-wrap: wrap;
+            margin-bottom: 16px;
+            font-size: 0.9rem;
+            color: #e6e1ec;
+        }
+        .game-hud strong {
+            color: #ff2a85;
+        }
+        .game-reset {
+            background: #231b2b;
+            color: #ffffff;
+            border: 1px solid rgba(255, 42, 133, 0.4);
+            border-radius: 6px;
+            padding: 6px 14px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: background-color 0.2s ease, transform 0.15s ease;
+        }
+        .game-reset:hover {
+            background: #e6277a;
+            transform: translateY(-1px);
+        }
+        .game-board {
+            display: inline-grid;
+            grid-template-columns: repeat(7, 42px);
+            gap: 4px;
+            background: #0e0a12;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .cell {
+            width: 42px;
+            height: 42px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.72rem;
+            user-select: none;
+        }
+        .cell-floor {
+            background: #1a1422;
+        }
+        .cell-wall {
+            background: #2c2238;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            color: #6e647c;
+        }
+        .cell-goal {
+            background: rgba(255, 42, 133, 0.14);
+            border: 1px dashed #ff2a85;
+            color: #ff2a85;
+            font-size: 0.65rem;
+        }
+        .cell-case {
+            background: #2b1829;
+            border: 2px solid #ff2a85;
+            color: #ffffff;
+            box-shadow: 0 0 10px rgba(255, 42, 133, 0.25);
+        }
+        .cell-case-done {
+            background: #163326;
+            border: 2px solid #38d996;
+            color: #9bf6cc;
+        }
+        .cell-player {
+            background: #ff2a85;
+            color: #0e0a12;
+            box-shadow: 0 0 12px rgba(255, 42, 133, 0.5);
+        }
+        .game-controls {
+            margin-top: 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+        .dpad-row {
+            display: flex;
+            gap: 8px;
+        }
+        .dpad-btn {
+            width: 44px;
+            height: 40px;
+            background: #231b2b;
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            border-radius: 6px;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+        .dpad-btn:active {
+            background: #ff2a85;
+            color: #0e0a12;
+        }
+        .game-status {
+            margin-top: 14px;
+            min-height: 24px;
+            font-weight: 600;
+            color: #38d996;
+            font-size: 0.95rem;
+        }
+
+        .contact-box {
+            max-width: 1060px;
+            margin: 0 auto 64px;
+            padding: 0 24px;
+        }
+        .contact-inner {
+            background-color: #16111c;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 8px;
+            padding: 32px 24px;
+            text-align: center;
+            transition: border-color 0.25s ease;
+        }
+        .contact-inner:hover {
+            border-color: rgba(255, 42, 133, 0.35);
+        }
+        .contact-inner h2 {
+            font-size: 1.45rem;
+            margin-bottom: 10px;
+        }
+        .contact-inner p {
+            color: #cfc8d8;
+            margin-bottom: 20px;
+        }
+        .phone-link {
+            display: inline-block;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #ff2a85;
+            text-decoration: none;
+            letter-spacing: 0.5px;
+            transition: transform 0.2s ease, text-shadow 0.2s ease;
+        }
+        .phone-link:hover {
+            transform: scale(1.05);
+            text-shadow: 0 0 16px rgba(255, 42, 133, 0.45);
+        }
+
+        footer {
+            text-align: center;
+            padding: 32px 24px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            color: #968ea2;
+            font-size: 0.85rem;
+        }
+
+        @media (max-width: 420px) {
+            .game-board {
+                grid-template-columns: repeat(7, 36px);
+            }
+            .cell {
+                width: 36px;
+                height: 36px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation: none !important;
+                transition: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="#"><img src="logot.png" alt="event_ops" class="brand-logo"></a>
+        <nav>
+            <a href="#ekipy">Ekipy</a>
+            <a href="#wspolpraca">Współpraca</a>
+            <a href="#minigra">Minigra</a>
+            <a href="#kontakt">Kontakt</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <img src="logot.png" alt="event_ops" class="hero-logo">
+        <div class="role-bar">
+            <span class="status-dot"></span>
+            Kraków • Stagehand • Technicy • Riggerzy
+        </div>
+        <h1>Ekipy na scenę, halę i zaplecze eventowe w Krakowie.</h1>
+        <p>Zapewniamy ludzi do realizacji produkcyjnych, załadunków, budowy scenografii i prac technicznych – tam, gdzie liczy się czas, BHP i sprawna koordynacja.</p>
+
+        <div class="carry-scene" aria-label="Animacja pracownika wchodzącego po schodkach ze skrzynią transportową">
+            <svg class="carry-svg" viewBox="0 0 360 136" role="img" aria-label="Ludzik niosący case po schodkach">
+                <!-- Schodki (3 stopnie + podest na górze, stopy opierają się na liniach poziomych) -->
+                <path d="M 20 116 L 115 116 L 115 98 L 165 98 L 165 80 L 215 80 L 215 62 L 330 62"
+                      fill="none" stroke="#8a7f99" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+                <line x1="115" y1="98" x2="115" y2="116" stroke="#ff2a85" stroke-width="2" opacity="0.65" />
+                <line x1="165" y1="80" x2="165" y2="98" stroke="#ff2a85" stroke-width="2" opacity="0.65" />
+                <line x1="215" y1="62" x2="215" y2="80" stroke="#ff2a85" stroke-width="2" opacity="0.65" />
+
+                <!-- Postać: stopy na y=116, środek na x=75 -->
+                <g class="carrier-group">
+                    <line class="leg-left" x1="72" y1="89" x2="65" y2="115" stroke="#e6e1ec" stroke-width="4.2" stroke-linecap="round" />
+                    <line class="leg-right" x1="78" y1="89" x2="85" y2="115" stroke="#b9b0c6" stroke-width="4.2" stroke-linecap="round" />
+
+                    <line x1="75" y1="64" x2="75" y2="90" stroke="#ffffff" stroke-width="4.8" stroke-linecap="round" />
+                    <circle cx="75" cy="53" r="7.5" fill="#ffffff" />
+                    <path d="M66 51 Q75 42 85 51 Z" fill="#ff2a85" />
+
+                    <!-- Case -->
+                    <rect x="86" y="63" width="36" height="24" rx="3" fill="#231b2b" stroke="#ff2a85" stroke-width="2.3" />
+                    <line x1="86" y1="75" x2="122" y2="75" stroke="#ff2a85" stroke-width="1.4" opacity="0.7" />
+                    <rect x="100" y="71.5" width="7" height="7" rx="1" fill="#ff2a85" />
+
+                    <!-- Ręce trzymające case -->
+                    <polyline points="75,69 87,73 92,73" fill="none" stroke="#ffffff" stroke-width="3.8" stroke-linecap="round" stroke-linejoin="round" />
+                </g>
+            </svg>
+        </div>
+
+        <div class="cta-group">
+            <a href="tel:+48500536800" class="btn">Zadzwoń: 500 536 800</a>
+            <a href="sms:+48500536800" class="btn-secondary">Wyślij SMS</a>
+        </div>
+    </section>
+
+    <section class="offer" id="ekipy">
+        <h2>Kogo zapewniamy</h2>
+        <div class="cards">
+            <div class="card">
+                <h3>Stagehand</h3>
+                <p>Załadunek i rozładunek sprzętu, praca przy scenie, pomoc przy montażu i demontażu konstrukcji oraz zaplecza na terenie Krakowa.</p>
+            </div>
+            <div class="card">
+                <h3>Technicy</h3>
+                <p>Wsparcie techniczne podczas przygotowań i trwania wydarzenia – sprawne działanie na planie, hali i scenie.</p>
+            </div>
+            <div class="card">
+                <h3>Riggerzy</h3>
+                <p>Prace podwieszane i obsługa systemów scenicznych z zachowaniem zasad bezpieczeństwa i wymogów produkcji.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="standards" id="wspolpraca">
+        <div class="standards-box">
+            <div class="standards-item">
+                <strong>Punktualność i gotowość</strong>
+                <span>stawiennictwo na call time i jasne rozliczenie godzin pracy.</span>
+            </div>
+            <div class="standards-item">
+                <strong>BHP i bezpieczeństwo</strong>
+                <span>praca zgodnie z wymogami obiektu, produkcji i przepisami.</span>
+            </div>
+            <div class="standards-item">
+                <strong>Lokalnie w Krakowie</strong>
+                <span>szybka reakcja na realizacje w Krakowie i okolicach.</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="game-section" id="minigra">
+        <div class="game-box">
+            <h2>Stagehand Challenge: Wepchnij case na strefę</h2>
+            <p class="game-sub">Użyj strzałek na klawiaturze lub przycisków poniżej, aby dopchać skrzynię (<strong>CASE</strong>) do oznaczonego punktu (<strong>CEL</strong>).</p>
+
+            <div class="game-hud">
+                <div>Ruchy: <strong id="moveCount">0</strong></div>
+                <button type="button" class="game-reset" id="resetGameBtn">Resetuj planszę</button>
+            </div>
+
+            <div class="game-board" id="gameBoard" role="grid" aria-label="Plansza gry w pchanie case'a"></div>
+
+            <div class="game-controls" aria-label="Sterowanie dotykowe">
+                <div class="dpad-row">
+                    <button type="button" class="dpad-btn" data-dir="up" aria-label="W górę">▲</button>
+                </div>
+                <div class="dpad-row">
+                    <button type="button" class="dpad-btn" data-dir="left" aria-label="W lewo">◀</button>
+                    <button type="button" class="dpad-btn" data-dir="down" aria-label="W dół">▼</button>
+                    <button type="button" class="dpad-btn" data-dir="right" aria-label="W prawo">▶</button>
+                </div>
+            </div>
+
+            <div class="game-status" id="gameStatus"></div>
+        </div>
+    </section>
+
+    <section class="contact-box" id="kontakt">
+        <div class="contact-inner">
+            <h2>Kontakt w sprawie terminu i składu</h2>
+            <p>Kraków i okolice — zadzwoń lub napisz SMS z datą, godziną call time oraz potrzebną liczbą osób.</p>
+            <a href="tel:+48500536800" class="phone-link">500 536 800</a>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2026 event_ops — Kraków. Wszystkie prawa zastrzeżone.</p>
+    </footer>
+
+    <script>
+    (function () {
+        const initialMap = [
+            "#######",
+            "#..G..#",
+            "#..#..#",
+            "#..C..#",
+            "#..P..#",
+            "#.....#",
+            "#######"
+        ];
+
+        const boardEl = document.getElementById("gameBoard");
+        const moveEl = document.getElementById("moveCount");
+        const statusEl = document.getElementById("gameStatus");
+        const resetBtn = document.getElementById("resetGameBtn");
+
+        let walls = new Set();
+        let goals = new Set();
+        let cases = new Set();
+        let player = { r: 0, c: 0 };
+        let moves = 0;
+        let won = false;
+
+        const key = (r, c) => `${r},${c}`;
+
+        function initGame() {
+            walls.clear();
+            goals.clear();
+            cases.clear();
+            moves = 0;
+            won = false;
+            moveEl.textContent = "0";
+            statusEl.textContent = "";
+
+            for (let r = 0; r < initialMap.length; r++) {
+                for (let c = 0; c < initialMap[r].length; c++) {
+                    const ch = initialMap[r][c];
+                    if (ch === "#") walls.add(key(r, c));
+                    if (ch === "G") goals.add(key(r, c));
+                    if (ch === "C") cases.add(key(r, c));
+                    if (ch === "P") player = { r, c };
+                }
+            }
+            render();
+        }
+
+        function render() {
+            boardEl.innerHTML = "";
+            for (let r = 0; r < initialMap.length; r++) {
+                for (let c = 0; c < initialMap[r].length; c++) {
+                    const k = key(r, c);
+                    const cell = document.createElement("div");
+                    cell.className = "cell";
+
+                    if (walls.has(k)) {
+                        cell.classList.add("cell-wall");
+                        cell.textContent = "■";
+                    } else if (player.r === r && player.c === c) {
+                        cell.classList.add("cell-player");
+                        cell.textContent = "OPS";
+                    } else if (cases.has(k)) {
+                        cell.classList.add("cell-case");
+                        if (goals.has(k)) cell.classList.add("cell-case-done");
+                        cell.textContent = "CASE";
+                    } else if (goals.has(k)) {
+                        cell.classList.add("cell-goal");
+                        cell.textContent = "CEL";
+                    } else {
+                        cell.classList.add("cell-floor");
+                    }
+                    boardEl.appendChild(cell);
+                }
+            }
+        }
+
+        function move(dir) {
+            if (won) return;
+            const deltas = {
+                up: [-1, 0],
+                down: [1, 0],
+                left: [0, -1],
+                right: [0, 1]
+            };
+            const [dr, dc] = deltas[dir] || [0, 0];
+            const nr = player.r + dr;
+            const nc = player.c + dc;
+            const nk = key(nr, nc);
+
+            if (walls.has(nk)) return;
+
+            if (cases.has(nk)) {
+                const br = nr + dr;
+                const bc = nc + dc;
+                const bk = key(br, bc);
+                if (walls.has(bk) || cases.has(bk)) return;
+                cases.delete(nk);
+                cases.add(bk);
+            }
+
+            player = { r: nr, c: nc };
+            moves += 1;
+            moveEl.textContent = String(moves);
+
+            if ([...cases].every((ck) => goals.has(ck))) {
+                won = true;
+                statusEl.textContent = `Case dostarczony w ${moves} ruchach! Dobra robota na scenie.`;
+            }
+            render();
+        }
+
+        document.addEventListener("keydown", (e) => {
+            const map = {
+                ArrowUp: "up",
+                ArrowDown: "down",
+                ArrowLeft: "left",
+                ArrowRight: "right"
+            };
+            if (map[e.key]) {
+                e.preventDefault();
+                move(map[e.key]);
+            }
+        });
+
+        document.querySelectorAll(".dpad-btn").forEach((btn) => {
+            btn.addEventListener("click", () => move(btn.dataset.dir));
+        });
+
+        resetBtn.addEventListener("click", initGame);
+        initGame();
+    })();
+    </script>
+
+</body>
+</html>
