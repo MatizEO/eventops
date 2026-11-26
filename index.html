@@ -12,7 +12,32 @@
             background-color: #0e0a12;
             color: #ffffff;
             line-height: 1.6;
+            overflow-x: hidden;
         }
+
+        /* Animacje kluczowe */
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(18px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulseDot {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(255, 42, 133, 0.7);
+            }
+            50% {
+                transform: scale(1.15);
+                box-shadow: 0 0 0 8px rgba(255, 42, 133, 0);
+            }
+        }
+
         header {
             display: flex;
             justify-content: space-between;
@@ -28,7 +53,13 @@
             height: 42px;
             width: auto;
             display: block;
+            transition: transform 0.25s ease, opacity 0.25s ease;
         }
+        .brand-logo:hover {
+            transform: scale(1.04);
+        }
+
+        /* Animowane podkreślenie w nawigacji */
         nav {
             display: flex;
             gap: 24px;
@@ -37,16 +68,36 @@
             letter-spacing: 1.4px;
         }
         nav a {
+            position: relative;
             color: #dcd6e5;
             text-decoration: none;
             text-transform: uppercase;
+            padding-bottom: 4px;
+            transition: color 0.25s ease;
         }
-        nav a:hover { color: #ff2a85; }
+        nav a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 2px;
+            background-color: #ff2a85;
+            transition: width 0.25s ease;
+        }
+        nav a:hover {
+            color: #ffffff;
+        }
+        nav a:hover::after {
+            width: 100%;
+        }
+
         .hero {
             max-width: 880px;
             margin: 0 auto;
             padding: 76px 24px 64px;
             text-align: center;
+            animation: fadeUp 0.7s ease-out both;
         }
         .hero-logo {
             max-width: 100%;
@@ -55,14 +106,30 @@
             height: auto;
             margin: 0 auto 24px;
             display: block;
+            transition: transform 0.35s ease, filter 0.35s ease;
+        }
+        .hero-logo:hover {
+            transform: scale(1.03);
+            filter: drop-shadow(0 0 18px rgba(255, 42, 133, 0.28));
         }
         .role-bar {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
             color: #ff2a85;
             font-size: 0.9rem;
             font-weight: 600;
             letter-spacing: 1.8px;
             text-transform: uppercase;
             margin-bottom: 14px;
+        }
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: #ff2a85;
+            display: inline-block;
+            animation: pulseDot 2s infinite;
         }
         .hero h1 {
             font-size: 1.95rem;
@@ -76,6 +143,8 @@
             max-width: 640px;
             margin: 0 auto 32px;
         }
+
+        /* Animowane przyciski */
         .cta-group {
             display: flex;
             justify-content: center;
@@ -91,8 +160,17 @@
             border-radius: 6px;
             font-weight: 600;
             font-size: 0.95rem;
+            transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.25s ease;
         }
-        .btn:hover { background-color: #ff2a85; }
+        .btn:hover {
+            background-color: #ff2a85;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(255, 42, 133, 0.35);
+        }
+        .btn:active {
+            transform: translateY(0);
+        }
+
         .btn-secondary {
             display: inline-block;
             padding: 13px 24px;
@@ -103,15 +181,23 @@
             border: 1px solid rgba(255, 255, 255, 0.2);
             font-weight: 600;
             font-size: 0.95rem;
+            transition: transform 0.2s ease, border-color 0.2s ease, color 0.2s ease, box-shadow 0.25s ease;
         }
         .btn-secondary:hover {
             border-color: #ff2a85;
             color: #ff2a85;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 42, 133, 0.14);
         }
+        .btn-secondary:active {
+            transform: translateY(0);
+        }
+
         .offer {
             max-width: 1060px;
             margin: 0 auto;
             padding: 20px 24px 72px;
+            animation: fadeUp 0.8s ease-out 0.15s both;
         }
         .offer h2 {
             text-align: center;
@@ -123,25 +209,40 @@
             grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
             gap: 20px;
         }
+
+        /* Animowane karty */
         .card {
             background-color: #16111c;
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 8px;
             padding: 26px 22px;
+            transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 42, 133, 0.45);
+            background-color: #1b1423;
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.45);
         }
         .card h3 {
             font-size: 1.1rem;
             margin-bottom: 10px;
             color: #ffffff;
+            transition: color 0.25s ease;
+        }
+        .card:hover h3 {
+            color: #ff2a85;
         }
         .card p {
             color: #c2bacd;
             font-size: 0.92rem;
         }
+
         .standards {
             max-width: 1060px;
             margin: 0 auto 72px;
             padding: 0 24px;
+            animation: fadeUp 0.8s ease-out 0.25s both;
         }
         .standards-box {
             background-color: #16111c;
@@ -151,6 +252,10 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: 20px;
+            transition: border-color 0.25s ease;
+        }
+        .standards-box:hover {
+            border-color: rgba(255, 42, 133, 0.5);
         }
         .standards-item strong {
             display: block;
@@ -162,6 +267,7 @@
             color: #cfc8d8;
             font-size: 0.9rem;
         }
+
         .contact-box {
             max-width: 1060px;
             margin: 0 auto 64px;
@@ -173,6 +279,10 @@
             border-radius: 8px;
             padding: 32px 24px;
             text-align: center;
+            transition: border-color 0.25s ease;
+        }
+        .contact-inner:hover {
+            border-color: rgba(255, 42, 133, 0.35);
         }
         .contact-inner h2 {
             font-size: 1.45rem;
@@ -184,19 +294,32 @@
         }
         .phone-link {
             display: inline-block;
-            font-size: 1.35rem;
+            font-size: 1.4rem;
             font-weight: 700;
             color: #ff2a85;
             text-decoration: none;
             letter-spacing: 0.5px;
+            transition: transform 0.2s ease, text-shadow 0.2s ease;
         }
-        .phone-link:hover { text-decoration: underline; }
+        .phone-link:hover {
+            transform: scale(1.05);
+            text-shadow: 0 0 16px rgba(255, 42, 133, 0.45);
+        }
+
         footer {
             text-align: center;
             padding: 32px 24px;
             border-top: 1px solid rgba(255, 255, 255, 0.08);
             color: #968ea2;
             font-size: 0.85rem;
+        }
+
+        /* Szanowanie ustawień systemowych użytkownika (ograniczenie ruchu) */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation: none !important;
+                transition: none !important;
+            }
         }
     </style>
 </head>
@@ -213,7 +336,10 @@
 
     <section class="hero">
         <img src="logot.png" alt="event_ops" class="hero-logo">
-        <div class="role-bar">Kraków • Stagehand • Technicy • Riggerzy</div>
+        <div class="role-bar">
+            <span class="status-dot"></span>
+            Kraków • Stagehand • Technicy • Riggerzy
+        </div>
         <h1>Ekipy na scenę, halę i zaplecze eventowe w Krakowie.</h1>
         <p>Zapewniamy ludzi do realizacji produkcyjnych, załadunków, budowy scenografii i prac technicznych – tam, gdzie liczy się czas, BHP i sprawna koordynacja.</p>
         <div class="cta-group">
